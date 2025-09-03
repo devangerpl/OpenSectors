@@ -113,6 +113,10 @@ Spotted an issue? Report it via Discord: **fizuxd** 💬
 ## 📌 TODO
 
 - 📚 Create a developer API wiki
+- ◼️ Add rectangular borders
+- 📡 Add support for NATS
+- 🔄 Rewrite player data synchronization system
+- 📝 Change configuration system from JSON to YAML
 
 ---
 
