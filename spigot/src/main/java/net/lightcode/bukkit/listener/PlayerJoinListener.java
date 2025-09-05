@@ -24,8 +24,7 @@ public class PlayerJoinListener implements Listener {
     void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(null);
 
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
+        final Stopwatch stopwatch = Stopwatch.createStarted();
         final Player player = event.getPlayer();
         final User user = this.plugin.userService().find(player.getUniqueId());
 
