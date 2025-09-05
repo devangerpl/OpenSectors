@@ -2,6 +2,7 @@ package net.lightcode.bukkit.inventory;
 
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.helper.CustomHeadHelper;
+import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.user.service.UserService;
 import net.lightcode.configuration.impl.MessagesConfiguration;
 import net.lightcode.bukkit.inventory.api.GuiWindow;
@@ -57,8 +58,16 @@ public class ChannelInventory {
                     return;
                 }
 
-                userService.find(player.getUniqueId()).ifPresent(user -> playerTransferService.connect(player, user, sector));
+                final User user = userService.find(player.getUniqueId());
+
+                if(user == null) {
+                    player.kickPlayer(ChatHelper.colored(messagesConfiguration.playerDataNotFoundMessage()));
+                    return;
+                }
+
+                playerTransferService.connect(player, user, sector, true);
             }));
+
             i++;
         }
 

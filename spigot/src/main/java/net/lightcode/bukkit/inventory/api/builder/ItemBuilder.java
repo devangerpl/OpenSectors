@@ -13,24 +13,8 @@ import java.util.stream.Collectors;
 public class ItemBuilder {
     private final ItemStack itemStack;
 
-    public ItemBuilder(Material material) {
-        this(material, 1);
-    }
-
     public ItemBuilder(ItemStack itemStack) {
         this.itemStack = itemStack;
-    }
-
-    public ItemBuilder(Material material, int amount) {
-        itemStack = new ItemStack(material, amount);
-    }
-
-    public ItemBuilder(Material m, int amount, short durability) {
-        itemStack = new ItemStack(m, amount, durability);
-    }
-
-    public ItemBuilder clone() {
-        return new ItemBuilder(this.itemStack.clone());
     }
 
     public ItemBuilder durability(short dur) {
@@ -66,41 +50,11 @@ public class ItemBuilder {
     }
 
 
-    public ItemBuilder removeLoreLine(String line) {
-        ItemMeta itemMeta = this.itemStack.getItemMeta();
-        if (itemMeta == null || itemMeta.getLore() == null) return this;
-
-        List<String> lore = itemMeta.getLore().stream()
-                .filter(l -> !l.equals(line))
-                .collect(Collectors.toList());
-
-        itemMeta.setLore(lore);
-        this.itemStack.setItemMeta(itemMeta);
-        return this;
-    }
-
-    public ItemBuilder removeLore(int index) {
-        ItemMeta itemMeta = this.itemStack.getItemMeta();
-        if (itemMeta == null || itemMeta.getLore() == null) return this;
-
-        List<String> lore = new ArrayList<>(itemMeta.getLore());
-
-        if (index < 0 || index >= lore.size()) return this;
-
-        lore.remove(index);
-
-        itemMeta.setLore(lore);
-        this.itemStack.setItemMeta(itemMeta);
-        return this;
-    }
-
     public ItemBuilder lore(String line) {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         if (itemMeta == null) return this;
 
-        List<String> lore = Optional.ofNullable(itemMeta.getLore())
-                .map(ArrayList::new)
-                .orElseGet(ArrayList::new);
+        List<String> lore = itemMeta.getLore() != null ? new ArrayList<>(itemMeta.getLore()) : new ArrayList<>();
 
         lore.add(ChatHelper.colored(line));
         itemMeta.setLore(lore);
@@ -112,13 +66,11 @@ public class ItemBuilder {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         if (itemMeta == null) return this;
 
-        List<String> lore = Optional.ofNullable(itemMeta.getLore())
-                .map(ArrayList::new)
-                .orElseGet(ArrayList::new);
+        List<String> lore = itemMeta.getLore() != null ? new ArrayList<>(itemMeta.getLore()) : new ArrayList<>();
 
-        lore.addAll(lines.stream()
-                .map(ChatHelper::colored)
-                .collect(Collectors.toList()));
+        for (String line : lines) {
+            lore.add(ChatHelper.colored(line));
+        }
 
         itemMeta.setLore(lore);
         this.itemStack.setItemMeta(itemMeta);
@@ -129,9 +81,7 @@ public class ItemBuilder {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         if (itemMeta == null) return this;
 
-        List<String> lore = Optional.ofNullable(itemMeta.getLore())
-                .map(ArrayList::new)
-                .orElseGet(ArrayList::new);
+        List<String> lore = itemMeta.getLore() != null ? new ArrayList<>(itemMeta.getLore()) : new ArrayList<>();
 
         if (pos >= 0 && pos < lore.size()) {
             lore.set(pos, ChatHelper.colored(line));
@@ -142,15 +92,6 @@ public class ItemBuilder {
         itemMeta.setLore(lore);
         this.itemStack.setItemMeta(itemMeta);
         return this;
-    }
-
-    public ItemStack build() {
-        return itemStack;
-    }
-
-    public List<String> lore() {
-        ItemMeta itemMeta = this.itemStack.getItemMeta();
-        return itemMeta != null ? itemMeta.getLore() : Collections.emptyList();
     }
 
     public ItemBuilder lore(List<String> lore) {
@@ -179,6 +120,7 @@ public class ItemBuilder {
 
     public ItemBuilder glow(boolean glow) {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
+
         if (glow) {
             itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, false);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -187,12 +129,13 @@ public class ItemBuilder {
         return this;
     }
 
-    public Material type() {
-        return this.itemStack.getType();
+
+    public ItemStack build() {
+        return this.itemStack;
     }
 
-    public ItemBuilder type(Material m) {
-        this.itemStack.setType(m);
+    public ItemBuilder type(Material material) {
+        this.itemStack.setType(material);
         return this;
     }
 

@@ -2,6 +2,7 @@ package net.lightcode.bukkit.listener;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.helper.ChatHelper;
+import net.lightcode.bukkit.user.User;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,12 +42,11 @@ public class PlayerSectorInteractListener implements Listener {
             return;
         }
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
 
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -61,11 +61,11 @@ public class PlayerSectorInteractListener implements Listener {
             return;
         }
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -80,11 +80,11 @@ public class PlayerSectorInteractListener implements Listener {
             return;
         }
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -99,11 +99,11 @@ public class PlayerSectorInteractListener implements Listener {
             return;
         }
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
 
@@ -137,66 +137,71 @@ public class PlayerSectorInteractListener implements Listener {
     void onEntityDamage(final EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
 
-        this.plugin.userService().find(event.getEntity().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final User user = this.plugin.userService().find(event.getEntity().getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onProjectileLaunch(final ProjectileLaunchEvent event) {
         if (!(event.getEntity().getShooter() instanceof Player)) return;
 
-        this.plugin.userService().find(event.getEntity().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final User user = this.plugin.userService().find(event.getEntity().getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onPickupItem(PlayerPickupItemEvent event) {
-        this.plugin.userService().find(event.getPlayer().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final Player player = event.getPlayer();
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onOpen(final InventoryOpenEvent event) {
-        this.plugin.userService().find(event.getPlayer().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final Player player = (Player) event.getPlayer();
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onClick(final InventoryClickEvent event) {
-        this.plugin.userService().find(event.getWhoClicked().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final Player player = (Player) event.getWhoClicked();
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onDrag(final InventoryDragEvent event) {
-        this.plugin.userService().find(event.getWhoClicked().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final Player player = (Player) event.getWhoClicked();
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onInteract(final InventoryInteractEvent event) {
-        this.plugin.userService().find(event.getWhoClicked().getUniqueId()).ifPresent(user -> {
-            if (!user.isRedirecting()) return;
+        final Player player = (Player) event.getWhoClicked();
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-            event.setCancelled(true);
-        });
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 }

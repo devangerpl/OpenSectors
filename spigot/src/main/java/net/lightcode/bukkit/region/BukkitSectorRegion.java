@@ -3,6 +3,7 @@ package net.lightcode.bukkit.region;
 import net.lightcode.sector.region.SectorRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 public class BukkitSectorRegion {
@@ -11,11 +12,13 @@ public class BukkitSectorRegion {
 
     private final Location centerLocation;
 
-    public BukkitSectorRegion(SectorRegion region) {
-        this.minimumPoint = new Vector(region.minX(), 0, region.minZ());
-        this.maximumPoint = new Vector(region.maxX(), 256, region.maxZ());
+    public BukkitSectorRegion(final SectorRegion region) {
+        final World world = Bukkit.getWorld("world");
 
-        this.centerLocation = new Location(Bukkit.getWorld("world"), region.centerX(), 64, region.centerZ());
+        this.minimumPoint = new Vector(region.minX(), 0, region.minZ());
+        this.maximumPoint = new Vector(region.maxX(), world.getMaxHeight(), region.maxZ());
+
+        this.centerLocation = new Location(world, region.centerX(), 64, region.centerZ());
     }
 
     public Vector minimumPoint() {

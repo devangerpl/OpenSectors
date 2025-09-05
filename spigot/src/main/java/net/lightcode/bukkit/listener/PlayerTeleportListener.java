@@ -1,8 +1,10 @@
 package net.lightcode.bukkit.listener;
 
+import net.lightcode.bukkit.user.User;
 import net.lightcode.configuration.impl.MessagesConfiguration;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.region.service.BukkitSectorRegionService;
+import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 import net.lightcode.sector.type.SectorType;
 import net.lightcode.bukkit.transfer.PlayerTransferService;
@@ -37,26 +39,28 @@ public class PlayerTeleportListener implements Listener {
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         if (event.isCancelled()) return;
 
-        if (!event.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)) return;
+        if (event.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL) return;
 
         final Player player = event.getPlayer();
-        final Location locationTo = event.getTo();
+        final Location location = event.getTo();
+        final User user = this.userService.find(player.getUniqueId());
 
-        this.userService.find(player.getUniqueId()).ifPresent(user -> this.bukkitSectorRegionService.find(locationTo).ifPresent(sector -> {
-            if (sector.sectorType().equals(SectorType.SPAWN)) {
-                sector = this.sectorService.findAvailableSpawnSector().orElse(sector);
-            }
+        Sector sector = this.bukkitSectorRegionService.find(location);
+        if (user == null || sector == null) return;
 
-            if (!sector.isOnline()) {
-                this.bukkitSectorRegionService.knock(player);
+        if (sector.sectorType() == SectorType.SPAWN && this.sectorService.find(SectorType.SPAWN) != null) {
+            sector = this.sectorService.find(SectorType.SPAWN);
+        }
 
-                player.sendMessage(ChatHelper.colored(this.messagesConfiguration.sectorIsOfflineMessage()));
-                return;
-            }
+        if (!sector.isOnline()) {
+            this.bukkitSectorRegionService.knock(player);
 
-            user.setRedirecting(true);
+            player.sendMessage(ChatHelper.colored(this.messagesConfiguration.sectorIsOfflineMessage()));
+            return;
+        }
 
-            this.transferService.connect(player, user, sector);
-        }));
+        user.setRedirecting(true);
+
+        this.transferService.connect(player, user, sector,false);
     }
 }

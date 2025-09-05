@@ -1,8 +1,10 @@
 package net.lightcode.bukkit.listener;
 
+import net.lightcode.bukkit.user.User;
 import net.lightcode.configuration.impl.MessagesConfiguration;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.region.service.BukkitSectorRegionService;
+import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 import net.lightcode.sector.type.SectorType;
 import net.lightcode.bukkit.transfer.PlayerTransferService;
@@ -37,31 +39,33 @@ public class PlayerMoveListener implements Listener {
     void onPlayerMove(PlayerMoveEvent event) {
         final Player player = event.getPlayer();
         final Location location = event.getTo();
+        final User user = this.userService.find(player.getUniqueId());
 
-        this.userService.find(player.getUniqueId()).ifPresent(user -> this.bukkitSectorRegionService.find(location).ifPresent(sector -> {
-            if (sector.sectorType().equals(SectorType.SPAWN)) {
-                sector = this.sectorService.findAvailableSpawnSector().orElse(sector);
-            }
+        Sector sector = this.bukkitSectorRegionService.find(location);
+        if (user == null || sector == null) return;
 
-            if (!sector.isOnline()) {
-                this.bukkitSectorRegionService.knock(player);
+        if (sector.sectorType() == SectorType.SPAWN && this.sectorService.find(SectorType.SPAWN) != null) {
+            sector = this.sectorService.find(SectorType.SPAWN);
+        }
 
-                player.sendMessage(ChatHelper.colored(this.messagesConfiguration.sectorIsOfflineMessage()));
-                return;
-            }
+        if (!sector.isOnline()) {
+            this.bukkitSectorRegionService.knock(player);
 
-            if(user.isTransferCooldown()) {
-                this.bukkitSectorRegionService.knock(player);
+            player.sendMessage(ChatHelper.colored(this.messagesConfiguration.sectorIsOfflineMessage()));
+            return;
+        }
 
-                player.sendMessage(ChatHelper.colored(this.messagesConfiguration.playerSectorTransferCooldownMessage()));
-                return;
-            }
+        if (user.isTransferCooldown()) {
+            this.bukkitSectorRegionService.knock(player);
 
-            if (user.isRedirecting()) return;
+            player.sendMessage(ChatHelper.colored(this.messagesConfiguration.playerSectorTransferCooldownMessage()));
+            return;
+        }
 
-            user.setRedirecting(true);
+        if (user.isRedirecting()) return;
 
-            this.transferService.connect(player, user, sector);
-        }));
+        user.setRedirecting(true);
+
+        this.transferService.connect(player, user, sector,false);
     }
 }

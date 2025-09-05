@@ -23,7 +23,7 @@ public class BukkitSectorIntegration {
         return new BukkitSectorIntegration(plugin);
     }
 
-    public Optional<User> findUserByUUID(UUID uuid) {
+    public User findUserByUUID(UUID uuid) {
         return this.plugin.userService().find(uuid);
     }
 
@@ -33,7 +33,7 @@ public class BukkitSectorIntegration {
                 .findFirst();
     }
 
-    public Optional<Sector> findSectorByName(String name) {
+    public Sector findSectorByName(String name) {
         return this.plugin.sectorService().find(name);
     }
 

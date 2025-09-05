@@ -2,6 +2,7 @@ package net.lightcode.bukkit.listener;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.helper.ChatHelper;
+import net.lightcode.bukkit.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +29,13 @@ public class PlayerLoginListener implements Listener {
             return;
         }
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresentOrElse(user -> this.plugin.logger().log("User data found for player " + player.getName()), () -> this.plugin.userService().create(player.getUniqueId(),player.getName()));
+        final User user = this.plugin.userService().find(player.getUniqueId());
+
+        if(user != null) {
+            this.plugin.logger().log("User data found for player " + player.getName());
+            return;
+        }
+
+        this.plugin.userService().create(player.getUniqueId(),player.getName());
     }
 }

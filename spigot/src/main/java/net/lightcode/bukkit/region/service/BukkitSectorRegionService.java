@@ -26,17 +26,19 @@ public class BukkitSectorRegionService {
         this.sectorRegions.put(name, bukkitSectorRegion);
     }
 
-    public Optional<BukkitSectorRegion> find(String name) {
-        return Optional.ofNullable(this.sectorRegions.get(name));
+    public BukkitSectorRegion find(String name) {
+        return this.sectorRegions.get(name);
     }
 
-    public Optional<Sector> find(Location location) {
-        return this.plugin.sectorService().sectors().values().stream().filter(sector -> {
-            BukkitSectorRegion region = this.sectorRegions.get(sector.id());
-
-            return region != null && region.isInside(location);
-        }).filter(sector -> !sector.equals(this.plugin.sectorService().currentSector()))
-                .filter(sector -> !sector.sectorType().equals(SectorType.SPAWN) || !this.plugin.sectorService().currentSector().sectorType().equals(SectorType.SPAWN)).findFirst();
+    public Sector find(Location location) {
+        return this.plugin.sectorService().sectors().values().stream()
+                .filter(sector -> {
+                    BukkitSectorRegion region = this.sectorRegions.get(sector.id());
+                    return region != null && region.isInside(location);
+                })
+                .filter(sector -> !sector.equals(this.plugin.sectorService().currentSector()))
+                .findFirst()
+                .orElse(null);
     }
 
 

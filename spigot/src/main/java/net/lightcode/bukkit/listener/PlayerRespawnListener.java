@@ -2,6 +2,9 @@ package net.lightcode.bukkit.listener;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.helper.ChatHelper;
+import net.lightcode.bukkit.user.User;
+import net.lightcode.sector.Sector;
+import net.lightcode.sector.type.SectorType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,9 +21,19 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     void onPlayerRespawn(PlayerRespawnEvent event) {
         final Player player = event.getPlayer();
+        final User user = this.plugin.userService().find(player.getUniqueId());
+        final Sector sector = this.plugin.sectorService().find(SectorType.SPAWN);
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresent(user -> this.plugin.sectorService().findAvailableSpawnSector().ifPresentOrElse(sector -> this.plugin.transferService().connect(player, user, sector), () -> player.kickPlayer(ChatHelper.colored(this.plugin.messagesConfiguration().spawnSectorNotFoundMessage()))));
+        if (user == null) {
+            player.kickPlayer(this.plugin.messagesConfiguration().playerDataNotFoundMessage());
+            return;
+        }
 
+        if(sector == null) {
+            player.kickPlayer(ChatHelper.colored(this.plugin.messagesConfiguration().spawnSectorNotFoundMessage()));
+            return;
+        }
 
+        this.plugin.transferService().connect(player, user, sector,false);
     }
 }

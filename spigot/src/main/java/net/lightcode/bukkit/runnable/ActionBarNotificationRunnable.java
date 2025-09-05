@@ -18,7 +18,6 @@ public class ActionBarNotificationRunnable extends BukkitRunnable {
     @Override
     public void run() {
         for (final Player player : this.plugin.getServer().getOnlinePlayers()) {
-
             final Location location = player.getLocation();
 
             double distance = this.plugin.bukkitSectorRegionService().distance(location);

@@ -19,12 +19,18 @@ public class SectorService {
         this.currentSector = currentSector;
     }
 
-    public Optional<Sector> find(String id) {
-        return Optional.ofNullable(this.sectors.get(id));
+    public Sector find(String id) {
+        return this.sectors.get(id);
     }
 
-    public Optional<Sector> findAvailableSpawnSector() {
-        return this.sectors.values().stream().filter(sector -> sector.sectorType().equals(SectorType.SPAWN)).filter(Sector::isOnline).findFirst();
+    public Sector find(SectorType type) {
+        return this.sectors
+                .values()
+                .stream()
+                .filter(sector -> sector.sectorType() == type)
+                .filter(Sector::isOnline)
+                .findFirst()
+                .orElse(null);
     }
 
     public void create(String id, Sector sector) {

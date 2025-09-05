@@ -16,7 +16,6 @@ public class SectorBorderUpdateRunnable extends BukkitRunnable {
     @Override
     public void run() {
         final BukkitSectorRegion sector = this.plugin.bukkitSectorRegionService().currentSectorRegion();
-
         final double sectorSize = Math.abs(sector.maximumPoint().getX() - sector.minimumPoint().getX()) + 1.1;
 
         for (final Player player : this.plugin.getServer().getOnlinePlayers()) {

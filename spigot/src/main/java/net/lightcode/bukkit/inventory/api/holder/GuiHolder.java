@@ -21,6 +21,7 @@ public class GuiHolder implements InventoryHolder {
         this.actions.getOrDefault(event.getRawSlot(), e -> e.setCancelled(true)).accept(event);
     }
 
+    @Override
     public Inventory getInventory() {
         return this.inventory;
     }
@@ -30,7 +31,6 @@ public class GuiHolder implements InventoryHolder {
     }
 
     public void setActionOnSlot(int slot, Consumer<InventoryClickEvent> consumer) {
-        this.actions.put(slot, (consumer != null) ? consumer : (event -> {
-        }));
+        this.actions.put(slot, (consumer != null) ? consumer : (event -> {}));
     }
 }

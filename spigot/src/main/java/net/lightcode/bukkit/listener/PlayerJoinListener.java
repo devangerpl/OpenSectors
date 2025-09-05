@@ -3,6 +3,7 @@ package net.lightcode.bukkit.listener;
 import com.google.common.base.Stopwatch;
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.helper.ChatHelper;
+import net.lightcode.bukkit.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,17 +27,21 @@ public class PlayerJoinListener implements Listener {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         final Player player = event.getPlayer();
+        final User user = this.plugin.userService().find(player.getUniqueId());
 
-        this.plugin.userService().find(player.getUniqueId()).ifPresent(user -> {
-            if(user.isRedirecting()) {
-                user.loadData(player,this.plugin);
+        if(user == null) {
+            player.kickPlayer(ChatHelper.colored(this.plugin.messagesConfiguration().playerDataNotFoundMessage()));
+            return;
+        }
 
-                user.setRedirecting(false);
-                user.setTransferCooldown(true);
+        if(user.isRedirecting()) {
+            user.loadData(player,this.plugin);
 
-                player.sendMessage(ChatHelper.colored(this.plugin.messagesConfiguration().playerDataLoadedMessage()).replace("{TIME}",String.valueOf(stopwatch.elapsed(TimeUnit.MILLISECONDS))));
-            }
-        });
+            user.setRedirecting(false);
+            user.setTransferCooldown(true);
+
+            player.sendMessage(ChatHelper.colored(this.plugin.messagesConfiguration().playerDataLoadedMessage()).replace("{TIME}",String.valueOf(stopwatch.elapsed(TimeUnit.MILLISECONDS))));
+        }
 
         player.sendTitle(ChatHelper.colored(this.plugin.messagesConfiguration().connectedInfoTitle()), ChatHelper.colored(this.plugin.messagesConfiguration().connectedInfoSubTitle()).replace("{SECTOR}", this.plugin.sectorService().currentSectorId()));
     }

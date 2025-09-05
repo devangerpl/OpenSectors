@@ -6,6 +6,7 @@ import net.lightcode.bukkit.event.PlayerSectorChangeEvent;
 import net.lightcode.helper.GsonHelper;
 import net.lightcode.packet.impl.UserSynchronizeDataPacket;
 import net.lightcode.sector.Sector;
+import net.lightcode.sector.type.SectorType;
 import org.bukkit.entity.Player;
 
 import java.util.concurrent.CompletableFuture;
@@ -18,7 +19,11 @@ public class PlayerTransferService {
         this.plugin = plugin;
     }
 
-    public void connect(final Player player, final User user, final Sector sector) {
+    public void connect(final Player player, final User user, final Sector sector, boolean channelTransfer) {
+        if (sector.sectorType() == SectorType.SPAWN
+                && this.plugin.sectorService().currentSector().sectorType() == SectorType.SPAWN
+                && !channelTransfer) return;
+
         this.plugin.getLogger().info("Starting connection process for player " + player.getName() + " to sector " + sector.id());
 
         this.plugin.getServer().getScheduler().runTask(this.plugin, () -> {

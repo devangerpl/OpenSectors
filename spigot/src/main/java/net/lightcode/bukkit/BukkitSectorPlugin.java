@@ -1,13 +1,13 @@
 package net.lightcode.bukkit;
 
 import net.lightcode.NetworkService;
-import net.lightcode.bukkit.integration.BukkitSectorIntegration;
 import net.lightcode.bukkit.listener.redis.PacketPlayerSendMessageListener;
 import net.lightcode.bukkit.listener.redis.PacketSectorConfigurationResponseListener;
 import net.lightcode.bukkit.listener.redis.PacketSectorInformationUpdateListener;
 import net.lightcode.bukkit.listener.redis.PacketUserSynchronizeDataListener;
 import net.lightcode.bukkit.region.service.BukkitSectorRegionService;
 import net.lightcode.bukkit.runnable.SectorInformationUpdateRunnable;
+import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.user.service.UserService;
 import net.lightcode.NmsService;
 import net.lightcode.bukkit.command.ChannelCommand;
@@ -24,6 +24,7 @@ import net.lightcode.bukkit.runnable.ScoreboardUpdateRunnable;
 import net.lightcode.bukkit.runnable.SectorBorderUpdateRunnable;
 import net.lightcode.bukkit.scoreboard.ScoreboardPlayerService;
 import net.lightcode.bukkit.scoreboard.SpawnScoreboard;
+import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 import net.lightcode.sector.type.SectorType;
 import net.lightcode.bukkit.transfer.PlayerTransferService;
@@ -79,8 +80,6 @@ public final class BukkitSectorPlugin extends JavaPlugin {
                 " ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝╚══════╝╚══════╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝\n";
         this.logger.log(text);
 
-        BukkitSectorIntegration.create(this);
-
         this.nmsService = NmsHelper.findNmsService(this);
         this.logger.log("NMS service found: " + (this.nmsService != null));
 
@@ -124,23 +123,27 @@ public final class BukkitSectorPlugin extends JavaPlugin {
     public void onDisable() {
         this.logger.log("Plugin disabling...");
 
-        if (this.sectorService.currentSector().sectorType().equals(SectorType.SPAWN)) {
+        if (this.sectorService.currentSector().sectorType() == SectorType.SPAWN) {
             this.logger.log("Current sector is SPAWN. Handling player transfer or kick.");
 
-            this.sectorService.findAvailableSpawnSector().ifPresentOrElse(sector -> {
-                this.logger.fine("Available spawn sector found: " + sector.id());
+            final Sector sector = this.sectorService.find(SectorType.SPAWN);
 
-                for (Player player : this.getServer().getOnlinePlayers()) {
-                    this.userService.find(player.getUniqueId())
-                            .ifPresent(user -> this.transferService.connect(player, user, sector));
-                }
-            }, () -> {
+            if (sector == null) {
                 this.logger.warning("No available spawn sector found! Kicking all players.");
 
-                for (Player player : this.getServer().getOnlinePlayers()) {
+                for (final Player player : this.getServer().getOnlinePlayers()) {
                     player.kickPlayer(ChatHelper.colored(this.messagesConfiguration.spawnSectorNotFoundMessage()));
                 }
-            });
+                return;
+            }
+
+            this.logger.fine("Available spawn sector found: " + sector.id());
+
+            for (final Player player : this.getServer().getOnlinePlayers()) {
+                final User user = this.userService.find(player.getUniqueId());
+
+                 this.transferService.connect(player, user, sector,true);
+            }
         }
 
         if (this.networkService == null) return;
@@ -161,7 +164,7 @@ public final class BukkitSectorPlugin extends JavaPlugin {
             return;
         }
 
-        if (!this.sectorService.currentSector().sectorType().equals(SectorType.SPAWN)) {
+        if (this.sectorService.currentSector().sectorType() != SectorType.SPAWN) {
             this.logger.log("Current sector is not SPAWN. Skipping scoreboard setup.");
             return;
         }
@@ -215,7 +218,7 @@ public final class BukkitSectorPlugin extends JavaPlugin {
 
     private void initListeners() {
         Stream.of(
-                new GuiInteractListener(),
+                new InventoryInteractListener(),
                 new PlayerJoinListener(this),
                 new PlayerRespawnListener(this),
                 new PlayerDeathListener(this),

@@ -9,13 +9,13 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-public class GuiInteractListener implements Listener {
+public class InventoryInteractListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         final Inventory inventory = event.getInventory();
 
-        if (!inventory.getType().equals(InventoryType.CHEST)) return;
+        if (inventory.getType() != InventoryType.CHEST) return;
 
         final InventoryHolder inventoryHolder = inventory.getHolder();
 
@@ -32,7 +32,7 @@ public class GuiInteractListener implements Listener {
     public void onInteract(InventoryInteractEvent event) {
         final Inventory inventory = event.getInventory();
 
-        if (!inventory.getType().equals(InventoryType.CHEST)) return;
+        if (inventory.getType() != InventoryType.CHEST) return;
 
         if (!(inventory.getHolder() instanceof GuiHolder)) return;
 

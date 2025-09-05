@@ -20,8 +20,8 @@ public class UserService {
         this.users.remove(uuid);
     }
 
-    public Optional<User> find(UUID uuid) {
-        return Optional.ofNullable(this.users.get(uuid));
+    public User find(UUID uuid) {
+        return this.users.get(uuid);
     }
 
     public Map<UUID, User> users() {
