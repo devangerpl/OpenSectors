@@ -36,7 +36,7 @@ public class PlayerTeleportListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerTeleport(PlayerTeleportEvent event) {
+    void onPlayerTeleport(PlayerTeleportEvent event) {
         if (event.isCancelled()) return;
 
         if (event.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL) return;
