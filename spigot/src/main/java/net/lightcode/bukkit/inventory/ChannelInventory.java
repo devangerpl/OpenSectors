@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ChannelInventory {
 
@@ -35,13 +36,13 @@ public class ChannelInventory {
             ItemBuilder sectorItem = new ItemBuilder(itemStack).name("&7Sektor &a" + sector.id());
 
             sectorItem.lore(sector.isOnline() ?
-                    Arrays.asList(
+                    List.of(
                             "",
                             ChatHelper.colored("&7Online: &a" + sector.players()),
                             ChatHelper.colored("&7TPS: &a" + ChatHelper.formatTps(sector.tps())),
                             "")
                     :
-                    Arrays.asList(
+                    List.of(
                             "",
                             ChatHelper.colored("&cSektor jest offline")));
 

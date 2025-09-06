@@ -1,4 +1,4 @@
-package net.lightcode.bridge.listener;
+package net.lightcode.bridge.listener.redis;
 
 import net.lightcode.NetworkService;
 import net.lightcode.bridge.BridgeLogger;

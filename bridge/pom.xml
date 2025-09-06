@@ -17,10 +17,19 @@
     </properties>
 
     <build>
-        <defaultGoal>plugin install</defaultGoal>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
                 <configuration>
                     <relocations>
                         <relocation>
@@ -29,8 +38,6 @@
                         </relocation>
                     </relocations>
                 </configuration>
-                <groupId>org.apache.maven.plugins</groupId>
-                <version>3.6.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

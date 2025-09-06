@@ -6,8 +6,9 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.lightcode.NetworkService;
-import net.lightcode.bridge.listener.PacketPlayerConnectSectorListener;
-import net.lightcode.bridge.listener.PacketSectorConfigurationRequestListener;
+import net.lightcode.bridge.listener.PlayerServerConnectListener;
+import net.lightcode.bridge.listener.redis.PacketPlayerConnectSectorListener;
+import net.lightcode.bridge.listener.redis.PacketSectorConfigurationRequestListener;
 import net.lightcode.configuration.impl.DatabaseConfiguration;
 import net.lightcode.configuration.impl.ProxyConfiguration;
 import net.lightcode.configuration.service.ConfigurationService;
@@ -77,18 +78,21 @@ public class BridgePlugin {
         this.networkService.subscribe("bridge", new PacketSectorConfigurationRequestListener(this.sectorService, this.networkService, this.logger));
         this.networkService.subscribe("bridge", new PacketPlayerConnectSectorListener(this));
 
+        this.server.getEventManager().register(this, new PlayerServerConnectListener(this));
+        this.logger.log("Bridge listeners registered");
+
         this.checkForUpdates();
 
         this.logger.log("Bridge initialization complete!");
     }
 
     private void checkForUpdates() {
-        UpdaterService updaterService = new UpdaterService("3.0", java.util.logging.Logger.getAnonymousLogger());
+        UpdaterService updaterService = new UpdaterService("3.5", java.util.logging.Logger.getAnonymousLogger());
 
         updaterService.check(newestVersion -> this.logger.warning(List.of(
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
                 "⚠️ A new version of OpenSectors! ⚠️",
-                "Current version: 3.0",
+                "Current version: 3.5",
                 "Available version: " + newestVersion,
                 "",
                 "Download at: https://github.com/fajzu1/OpenSectors",
@@ -96,6 +100,9 @@ public class BridgePlugin {
         )));
     }
 
+    public SectorService sectorService() {
+        return this.sectorService;
+    }
 
     public ProxyServer server() {
         return this.server;

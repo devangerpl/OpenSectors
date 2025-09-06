@@ -12,30 +12,24 @@ import org.bukkit.inventory.InventoryHolder;
 public class InventoryInteractListener implements Listener {
 
     @EventHandler
-    public void onClick(InventoryClickEvent event) {
-        final Inventory inventory = event.getInventory();
+    void onInventoryClick(InventoryClickEvent event) {
+        if (!this.isGuiWindow(event.getInventory())) return;
 
-        if (inventory.getType() != InventoryType.CHEST) return;
-
-        final InventoryHolder inventoryHolder = inventory.getHolder();
-
-        if (!(inventoryHolder instanceof GuiHolder)) return;
-
-        final GuiHolder holder = (GuiHolder) inventoryHolder;
-
+        GuiHolder holder = (GuiHolder) event.getInventory().getHolder();
         event.setCancelled(true);
-
         holder.handleClick(event);
     }
 
     @EventHandler
-    public void onInteract(InventoryInteractEvent event) {
-        final Inventory inventory = event.getInventory();
-
-        if (inventory.getType() != InventoryType.CHEST) return;
-
-        if (!(inventory.getHolder() instanceof GuiHolder)) return;
+    void onInventoryInteract(InventoryInteractEvent event) {
+        if (!this.isGuiWindow(event.getInventory())) return;
 
         event.setCancelled(true);
+    }
+
+    private boolean isGuiWindow(Inventory inventory) {
+        return inventory != null
+                && inventory.getType() == InventoryType.CHEST
+                && inventory.getHolder() instanceof GuiHolder;
     }
 }

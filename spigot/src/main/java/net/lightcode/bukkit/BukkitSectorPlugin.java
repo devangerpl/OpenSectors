@@ -4,7 +4,7 @@ import net.lightcode.NetworkService;
 import net.lightcode.bukkit.listener.redis.PacketPlayerSendMessageListener;
 import net.lightcode.bukkit.listener.redis.PacketSectorConfigurationResponseListener;
 import net.lightcode.bukkit.listener.redis.PacketSectorInformationUpdateListener;
-import net.lightcode.bukkit.listener.redis.PacketUserSynchronizeDataListener;
+import net.lightcode.bukkit.listener.redis.PacketPlayerTransferRequestListener;
 import net.lightcode.bukkit.region.service.BukkitSectorRegionService;
 import net.lightcode.bukkit.runnable.SectorInformationUpdateRunnable;
 import net.lightcode.bukkit.user.User;
@@ -90,16 +90,16 @@ public final class BukkitSectorPlugin extends JavaPlugin {
 
         this.sectorService = new SectorService(sectorConfiguration.currentSector());
         this.bukkitSectorRegionService = new BukkitSectorRegionService(this);
-
         this.transferService = new PlayerTransferService(this);
-        this.userService = new UserService();
 
         this.networkService = new NetworkService(databaseConfiguration.redisHost(), databaseConfiguration.redisPort(), databaseConfiguration.redisPassword());
         this.networkService.setPacketSender(this.sectorService.currentSectorId());
         this.logger.log("NetworkService started with sender: " + this.sectorService.currentSectorId());
 
+        this.userService = new UserService(this.networkService);
+
         this.networkService.subscribe(this.sectorService.currentSectorId(), new PacketSectorConfigurationResponseListener(this));
-        this.networkService.subscribe(this.sectorService.currentSectorId(), new PacketUserSynchronizeDataListener(this.networkService, this.userService));
+        this.networkService.subscribe(this.sectorService.currentSectorId(), new PacketPlayerTransferRequestListener(this));
         this.networkService.subscribe("sectors", new PacketSectorInformationUpdateListener(this.sectorService));
         this.networkService.subscribe("sectors", new PacketPlayerSendMessageListener(this));
         this.logger.log("Messenger subscriptions done.");
@@ -190,7 +190,7 @@ public final class BukkitSectorPlugin extends JavaPlugin {
         return this.userService;
     }
 
-    public NetworkService messengerService() {
+    public NetworkService networkService() {
         return this.networkService;
     }
 

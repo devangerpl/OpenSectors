@@ -14,6 +14,6 @@ public class SectorInformationUpdateRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        this.plugin.messengerService().publish("sectors", new SectorInformationUpdatePacket(this.plugin.getServer().getOnlinePlayers().size(), this.plugin.nmsService().minecraftServer().tps()));
+        this.plugin.networkService().publish("sectors", new SectorInformationUpdatePacket(this.plugin.getServer().getOnlinePlayers().size(), this.plugin.nmsService().minecraftServer().tps()));
     }
 }

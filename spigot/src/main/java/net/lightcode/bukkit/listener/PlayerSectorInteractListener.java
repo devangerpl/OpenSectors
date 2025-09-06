@@ -131,6 +131,12 @@ public class PlayerSectorInteractListener implements Listener {
         if (this.plugin.bukkitSectorRegionService().distance(location) <= 30) {
             event.setCancelled(true);
         }
+
+        final User user = this.plugin.userService().find(player.getUniqueId());
+
+        if (user == null || !user.isRedirecting()) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler

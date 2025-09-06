@@ -2,6 +2,7 @@ package net.lightcode.bukkit.listener.redis;
 
 import net.lightcode.packet.impl.SectorInformationUpdatePacket;
 import net.lightcode.redis.PacketListener;
+import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 
 public class PacketSectorInformationUpdateListener extends PacketListener<SectorInformationUpdatePacket> {
@@ -16,10 +17,12 @@ public class PacketSectorInformationUpdateListener extends PacketListener<Sector
 
     @Override
     public void handle(SectorInformationUpdatePacket packet) {
-        this.sectorService.find(packet.sender()).ifPresent(sector -> {
-            sector.lastUpdate(System.currentTimeMillis());
-            sector.players(packet.players());
-            sector.tps(packet.tps());
-        });
+        Sector sector = this.sectorService.find(packet.sender());
+
+        if (sector == null) return;
+
+        sector.lastUpdate(System.currentTimeMillis());
+        sector.players(packet.players());
+        sector.tps(packet.tps());
     }
 }

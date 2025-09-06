@@ -50,11 +50,11 @@ public class BukkitSectorIntegration {
     }
 
     public void sendPacket(String channel, Packet packet) {
-       this.plugin.messengerService().publish(channel, packet);
+       this.plugin.networkService().publish(channel, packet);
     }
 
     public NetworkService messengerService() {
-        return this.plugin.messengerService();
+        return this.plugin.networkService();
     }
 
     public BukkitSectorPlugin getPlugin() {

@@ -17,6 +17,7 @@ public class NetworkService {
 
     private final StatefulRedisPubSubConnection<String, Packet> pubSubConnection;
     private final StatefulRedisConnection<String, Packet> connection;
+    private final StatefulRedisConnection<String, String> databaseConnection;
 
     private String packetSender;
 
@@ -33,12 +34,13 @@ public class NetworkService {
 
         this.pubSubConnection = redisClient.connectPubSub(messagePackCodec);
         this.connection = redisClient.connect(messagePackCodec);
-
+        this.databaseConnection = redisClient.connect();
     }
 
     public void shutdown() {
         this.pubSubConnection.sync().unsubscribe(this.subscribedChannels.toArray(new String[0]));
         this.pubSubConnection.close();
+        this.databaseConnection.close();
         this.connection.close();
     }
 
@@ -63,5 +65,9 @@ public class NetworkService {
 
     public void setPacketSender(String packetSender) {
         this.packetSender = packetSender;
+    }
+
+    public StatefulRedisConnection<String, String> databaseConnection() {
+        return this.databaseConnection;
     }
 }

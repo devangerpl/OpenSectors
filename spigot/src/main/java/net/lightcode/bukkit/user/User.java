@@ -65,10 +65,6 @@ public class User {
         this.heldSlot = player.getInventory().getHeldItemSlot();
     }
 
-    public long redirectTime() {
-        return this.redirectTime;
-    }
-
     public boolean isRedirecting() {
         return this.redirectTime + 5000L > System.currentTimeMillis();
     }

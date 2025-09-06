@@ -4,7 +4,9 @@ import net.lightcode.bukkit.region.BukkitSectorRegion;
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.type.SectorType;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -30,10 +32,22 @@ public class BukkitSectorRegionService {
         return this.sectorRegions.get(name);
     }
 
+    public boolean isInsideBorder(Location location) {
+        final BukkitSectorRegion region = this.currentSectorRegion();
+
+        final double xDiff = Math.abs(region.maximumPoint().getX() - region.minimumPoint().getX()) + 1;
+        final double zDiff = Math.abs(region.maximumPoint().getZ() - region.minimumPoint().getZ()) + 1;
+
+        final double borderSize = Math.min(xDiff, zDiff);
+
+        return location.getBlockX() >= borderSize || location.getBlockX() <= -borderSize
+                || location.getBlockZ() >= borderSize || location.getBlockZ() <= -borderSize;
+    }
+
     public Sector find(Location location) {
         return this.plugin.sectorService().sectors().values().stream()
                 .filter(sector -> {
-                    BukkitSectorRegion region = this.sectorRegions.get(sector.id());
+                    final BukkitSectorRegion region = this.sectorRegions.get(sector.id());
                     return region != null && region.isInside(location);
                 })
                 .filter(sector -> !sector.equals(this.plugin.sectorService().currentSector()))
@@ -41,6 +55,14 @@ public class BukkitSectorRegionService {
                 .orElse(null);
     }
 
+    public Location randomLocation(Sector sector) {
+        final double x = sector.region().minX() + Math.random() * (sector.region().maxX() - sector.region().minX());
+        final double z = sector.region().minZ() + Math.random() * (sector.region().maxZ() - sector.region().minZ());
+
+        World world = Bukkit.getWorld("world");
+
+        return new Location(world, x, world.getHighestBlockYAt((int) x, (int) z), z);
+    }
 
     public void knock(Player player) {
         final BukkitSectorRegion sectorRegion = this.currentSectorRegion();
@@ -53,7 +75,6 @@ public class BukkitSectorRegionService {
                 sectorRegion.center().getZ());
 
         player.setVelocity(location.toVector().subtract(player.getLocation().toVector()).normalize().multiply(1.2D));
-
     }
 
     public double distance(Location location) {

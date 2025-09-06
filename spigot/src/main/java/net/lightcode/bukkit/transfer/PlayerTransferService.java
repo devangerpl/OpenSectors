@@ -3,8 +3,8 @@ package net.lightcode.bukkit.transfer;
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.event.PlayerSectorChangeEvent;
-import net.lightcode.helper.GsonHelper;
-import net.lightcode.packet.impl.UserSynchronizeDataPacket;
+import net.lightcode.packet.impl.PlayerConnectSectorPacket;
+import net.lightcode.packet.impl.PlayerTransferRequestPacket;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.type.SectorType;
 import org.bukkit.entity.Player;
@@ -40,10 +40,13 @@ public class PlayerTransferService {
             }
 
             this.plugin.getLogger().info("Saving user data for player " + player.getName());
+
             CompletableFuture.runAsync(() -> {
                 user.saveData(player,this.plugin);
 
-                this.plugin.messengerService().publish(sector.id(), new UserSynchronizeDataPacket(GsonHelper.toJson(user), sector.id()));
+                this.plugin.userService().userRepository().update(user);
+            }).thenAccept(unused -> {
+                this.plugin.networkService().publish(sector.id(), new PlayerTransferRequestPacket(player.getName()));
 
                 this.plugin.getLogger().info("Connection process finished for player " + player.getName());
             });

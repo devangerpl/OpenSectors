@@ -34,6 +34,8 @@ public class PlayerRespawnListener implements Listener {
             return;
         }
 
+        event.setRespawnLocation(this.plugin.bukkitSectorRegionService().randomLocation(sector));
+
         this.plugin.transferService().connect(player, user, sector,false);
     }
 }
