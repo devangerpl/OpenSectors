@@ -11,6 +11,11 @@
 - 🧭 Shared and synced sector information  
 - 💬 Global player chat synchronized across all sectors  
 
+---
+
+- 🔗 Wiki [Click](https://github.com/fajzu1/OpenSectors/wiki)
+
+---
 ## ⏯ Video
 
 ![](assets/video-example.gif)<br/>
@@ -113,7 +118,6 @@ Spotted an issue? Report it via Discord: **fizuxd** 💬
 
 ## 📌 TODO
 
-- 📚 Create a developer API wiki
 - 📡 Add support for NATS
 - 📝 Change configuration system from JSON to YAML
 
