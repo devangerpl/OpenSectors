@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 public class PlayerLoadDataEvent extends Event {
     private final HandlerList handlers = new HandlerList();
 
-    private final boolean cancelled;
+    private boolean cancelled;
 
     private final Player player;
 
@@ -23,6 +23,10 @@ public class PlayerLoadDataEvent extends Event {
     @Override
     public HandlerList getHandlers() {
         return this.handlers;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public boolean isCancelled() {

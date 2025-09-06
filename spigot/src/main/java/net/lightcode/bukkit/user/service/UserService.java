@@ -26,6 +26,10 @@ public class UserService {
         this.users.remove(uuid);
     }
 
+    public User find(String name) {
+        return this.users.values().stream().filter(user -> user.name().equals(name)).findFirst().orElse(null);
+    }
+
     public User find(UUID uuid) {
         return this.users.get(uuid);
     }

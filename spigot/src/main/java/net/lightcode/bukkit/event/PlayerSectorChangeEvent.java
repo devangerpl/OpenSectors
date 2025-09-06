@@ -9,7 +9,7 @@ public class PlayerSectorChangeEvent extends Event {
 
     private final HandlerList handlers = new HandlerList();
 
-    private final boolean cancelled;
+    private boolean cancelled;
 
     private final Sector currentSector, newSector;
 
@@ -25,6 +25,10 @@ public class PlayerSectorChangeEvent extends Event {
     @Override
     public HandlerList getHandlers() {
         return this.handlers;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public boolean isCancelled() {

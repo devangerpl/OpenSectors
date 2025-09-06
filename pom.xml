@@ -18,6 +18,13 @@
         <module>bridge</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/fajzu1/OpenSectors</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
