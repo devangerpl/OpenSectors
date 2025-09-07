@@ -20,6 +20,13 @@ public class PacketSectorConfigurationResponseListener extends PacketListener<Se
 
     @Override
     public void handle(SectorConfigurationResponsePacket packet) {
+        if(packet.sectors() == null) {
+            this.plugin.logger().severe("No found sector with name " + this.plugin.sectorService().currentSectorId());
+
+            this.plugin.getServer().shutdown();
+            return;
+        }
+
         this.plugin.logger().log("Received SectorConfigurationResponsePacket with " + List.of(packet.sectors()).size() + " sectors.");
 
         this.plugin.sectorService().load(packet.sectors());

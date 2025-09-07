@@ -29,6 +29,11 @@ public class PacketSectorConfigurationRequestListener extends PacketListener<Sec
         this.logger.log("Received SectorConfigurationRequestPacket from sender: {}", packet.sender());
 
         if (this.sectorService.find(packet.sender()) == null) {
+            this.networkService.publish(
+                    packet.sender(),
+                    new SectorConfigurationResponsePacket(null)
+            );
+
             this.logger.warning("No sector found for sender: {}", packet.sender());
             return;
         }

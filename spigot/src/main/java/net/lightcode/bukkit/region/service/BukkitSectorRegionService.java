@@ -90,7 +90,7 @@ public class BukkitSectorRegionService {
         );
     }
 
-    public Map<String, BukkitSectorRegion> sectorRegions() {
+    public Map<String, BukkitSectorRegion> regions() {
         return this.sectorRegions;
     }
 

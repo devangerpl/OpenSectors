@@ -6,15 +6,13 @@ import org.bukkit.plugin.Plugin;
 public class NmsHelper {
 
     public static NmsService findNmsService(Plugin plugin) {
-        String nmsVersion = findBukkitVersion(plugin);
-
-        String className = String.format("net.lightcode.%s.%sNmsService", nmsVersion, nmsVersion);
+        final String nmsVersion = findBukkitVersion(plugin);
+        final String className = String.format("net.lightcode.%s.%sNmsService", nmsVersion, nmsVersion);
 
         try {
             return (NmsService) Class.forName(className).newInstance();
         } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
+            throw new RuntimeException("Not found nms for version " + nmsVersion);
         }
     }
 
