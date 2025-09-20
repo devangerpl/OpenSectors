@@ -25,7 +25,12 @@ public class Sector implements Serializable {
         this.region = null;
     }
 
-    public Sector(String id, SectorType sectorType, int minX, int maxX, int minZ, int maxZ) {
+    public Sector(String id,
+                  SectorType sectorType,
+                  int minX,
+                  int maxX,
+                  int minZ,
+                  int maxZ) {
         this.id = id;
         this.sectorType = sectorType;
 

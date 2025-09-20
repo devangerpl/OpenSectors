@@ -6,10 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class SectorBorderUpdateRunnable extends BukkitRunnable {
 
     private final BukkitSectorPlugin plugin;
@@ -33,7 +29,7 @@ public class SectorBorderUpdateRunnable extends BukkitRunnable {
 
             final double addX = xDiff > zDiff ? location.getX() - centerX : 0, addZ = zDiff > xDiff ? location.getZ() - centerZ : 0;
 
-            this.plugin.nmsService().border().sendWorldBorder(player,Math.min(xDiff, zDiff) + 0.4, centerX + 0.5 + addX, centerZ + 0.5 + addZ);
+            this.plugin.nmsService().border().sendWorldBorder(player, Math.min(xDiff, zDiff) + 0.4, centerX + 0.5 + addX, centerZ + 0.5 + addZ);
         }
     }
 }

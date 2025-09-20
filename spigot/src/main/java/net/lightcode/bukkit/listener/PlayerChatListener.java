@@ -21,6 +21,6 @@ public class PlayerChatListener implements Listener {
 
         event.setCancelled(true);
 
-        this.networkService.publish("sectors", new PlayerSendMessagePacket(player.getName(),event.getMessage()));
+        this.networkService.publish("sectors", new PlayerSendMessagePacket(player.getName(), event.getMessage()));
     }
 }

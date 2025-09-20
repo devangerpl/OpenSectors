@@ -17,12 +17,18 @@ public class NmsHelper {
     }
 
     protected static String findBukkitVersion(Plugin plugin) {
-        StringBuilder nmsVersion = new StringBuilder(plugin.getServer().getClass().getPackage().getName().split("\\.")[3]);
+        String packageName = plugin.getServer().getClass().getPackage().getName();
+        String[] parts = packageName.split("\\.");
 
-        int revPosition = nmsVersion.lastIndexOf("_");
-        nmsVersion.deleteCharAt(revPosition);
+        if (parts.length > 3) {
+            return parts[3];
+        }
 
-        return nmsVersion.toString();
+        String version = plugin.getServer().getBukkitVersion();
+        String clean = version.split("-")[0];
+        String[] nums = clean.split("\\.");  ]
+
+        return "v" + nums[0] + "_" + nums[1] + "R1";
     }
 
 }

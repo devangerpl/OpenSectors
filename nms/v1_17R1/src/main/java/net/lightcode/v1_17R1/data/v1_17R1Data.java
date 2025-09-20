@@ -18,7 +18,8 @@ public class v1_17R1Data implements Data<Player, Object> {
     }
 
     @Override
-    public void loadData(Player player, Object nbtTagCompound) {
+    public void loadData(Player player,
+                         Object nbtTagCompound) {
         ServerPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
         nmsPlayer.load((CompoundTag) nbtTagCompound);
     }

@@ -5,13 +5,16 @@ import java.io.Serializable;
 public class SectorRegion implements Serializable {
     private final int minX, maxX, minZ, maxZ;
 
-    private final int centerX,centerZ;
+    private final int centerX, centerZ;
 
     public SectorRegion() {
         this(0, 0, 0, 0);
     }
 
-    public SectorRegion(int minX, int maxX, int minZ, int maxZ) {
+    public SectorRegion(int minX,
+                        int maxX,
+                        int minZ,
+                        int maxZ) {
         this.minX = minX;
         this.maxX = maxX;
         this.minZ = minZ;

@@ -26,7 +26,7 @@ public class v1_20R5NmsService implements NmsService {
     }
 
     @Override
-    public Data<Player,Object> data() {
+    public Data<Player, Object> data() {
         return new v1_20R5Data();
     }
 

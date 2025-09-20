@@ -1,9 +1,8 @@
 package net.lightcode.bukkit.transfer;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
-import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.event.PlayerSectorChangeEvent;
-import net.lightcode.packet.impl.PlayerConnectSectorPacket;
+import net.lightcode.bukkit.user.User;
 import net.lightcode.packet.impl.PlayerTransferRequestPacket;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.type.SectorType;
@@ -19,7 +18,10 @@ public class PlayerTransferService {
         this.plugin = plugin;
     }
 
-    public void connect(final Player player, final User user, final Sector sector, boolean channelTransfer) {
+    public void connect(final Player player,
+                        final User user,
+                        final Sector sector,
+                        boolean channelTransfer) {
         if (sector.sectorType() == SectorType.SPAWN
                 && this.plugin.sectorService().currentSector().sectorType() == SectorType.SPAWN
                 && !channelTransfer) return;
@@ -42,7 +44,7 @@ public class PlayerTransferService {
             this.plugin.getLogger().info("Saving user data for player " + player.getName());
 
             CompletableFuture.runAsync(() -> {
-                user.saveData(player,this.plugin);
+                user.saveData(player, this.plugin);
 
                 this.plugin.userService().userRepository().update(user);
             }).thenAccept(unused -> {

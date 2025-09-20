@@ -16,7 +16,8 @@ public class BridgeLogger {
         this.logger.info(message);
     }
 
-    public void log(String message, Object... args) {
+    public void log(String message,
+                    Object... args) {
         message = format(message, args);
         this.logger.info(message);
     }
@@ -31,7 +32,8 @@ public class BridgeLogger {
         this.logger.warn(message);
     }
 
-    public void warning(String message, Object... args) {
+    public void warning(String message,
+                        Object... args) {
         message = format(message, args);
         this.logger.warn(message);
     }
@@ -46,12 +48,14 @@ public class BridgeLogger {
         this.logger.error(message);
     }
 
-    public void severe(String message, Object... args) {
+    public void severe(String message,
+                       Object... args) {
         message = format(message, args);
         this.logger.error(message);
     }
 
-    private String format(String message, Object... args) {
+    private String format(String message,
+                          Object... args) {
         for (Object arg : args) {
             message = message.replaceFirst("\\{}", arg == null ? "null" : arg.toString());
         }

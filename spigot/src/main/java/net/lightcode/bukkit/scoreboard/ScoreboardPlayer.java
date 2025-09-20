@@ -22,7 +22,8 @@ public class ScoreboardPlayer {
 
     private final ScoreboardProfileFacade profile;
 
-    public ScoreboardPlayer(Player player, ScoreboardProfileFacade profile) {
+    public ScoreboardPlayer(Player player,
+                            ScoreboardProfileFacade profile) {
         this.player = player;
         this.profile = profile;
 

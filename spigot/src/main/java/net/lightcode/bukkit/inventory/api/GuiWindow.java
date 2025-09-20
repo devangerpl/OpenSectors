@@ -15,13 +15,16 @@ public class GuiWindow {
 
     private final GuiHolder holder;
 
-    public GuiWindow(String name, int rows) {
+    public GuiWindow(String name,
+                     int rows) {
         this.holder = new GuiHolder();
         this.inv = Bukkit.createInventory(this.holder, (rows > 6) ? 54 : (rows * 9), ChatHelper.colored(name));
         this.holder.setInventory(this.inv);
     }
 
-    public void setItem(int slot, ItemStack item, Consumer<InventoryClickEvent> consumer) {
+    public void setItem(int slot,
+                        ItemStack item,
+                        Consumer<InventoryClickEvent> consumer) {
         this.holder.setActionOnSlot(slot, consumer);
         this.inv.setItem(slot, item);
     }

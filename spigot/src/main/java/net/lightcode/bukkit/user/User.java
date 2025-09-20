@@ -6,11 +6,9 @@ import net.lightcode.bukkit.event.PlayerSaveDataEvent;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.helper.SerializeHelper;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
-import java.util.function.Consumer;
 
 public class User {
 
@@ -20,14 +18,16 @@ public class User {
     private String serializedData, serializedLocation, gameMode;
 
     private int heldSlot;
-    private long redirectTime,transferCooldown;
+    private long redirectTime, transferCooldown;
 
-    public User(String name,UUID uuid) {
+    public User(String name,
+                UUID uuid) {
         this.name = name;
         this.uuid = uuid;
     }
 
-    public void loadData(Player player, BukkitSectorPlugin plugin) {
+    public void loadData(Player player,
+                         BukkitSectorPlugin plugin) {
         if (this.serializedData == null || this.serializedLocation == null || this.gameMode == null) {
             player.kickPlayer(ChatHelper.colored(plugin.messagesConfiguration().playerDataNotFoundMessage()));
             return;
@@ -52,7 +52,8 @@ public class User {
         }
     }
 
-    public void saveData(Player player, BukkitSectorPlugin plugin) {
+    public void saveData(Player player,
+                         BukkitSectorPlugin plugin) {
         PlayerSaveDataEvent event = new PlayerSaveDataEvent(player, this);
         plugin.getServer().getPluginManager().callEvent(event);
 

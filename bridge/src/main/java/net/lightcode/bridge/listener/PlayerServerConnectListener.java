@@ -3,13 +3,10 @@ package net.lightcode.bridge.listener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import net.lightcode.bridge.BridgePlugin;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.type.SectorType;
-
-import java.util.Optional;
 
 public class PlayerServerConnectListener {
 
@@ -22,15 +19,11 @@ public class PlayerServerConnectListener {
     @Subscribe
     public void onServerPreConnect(ServerPreConnectEvent event) {
         Player player = event.getPlayer();
-        Optional<RegisteredServer> targetServerOptional = event.getResult().getServer();
+        ;
 
-        if (targetServerOptional.isEmpty()) return;
-
-        RegisteredServer targetServer = targetServerOptional.get();
-
-        if (targetServer.ping().join() != null) return;
-
-        Sector sector = this.plugin.sectorService().find(targetServer.getServerInfo().getName());
+        Sector sector = this.plugin.sectorService().find(
+                this.plugin.networkService().databaseConnection().sync().get(player.getUsername())
+        );
 
         if (sector == null || sector.sectorType() == SectorType.SPAWN) {
             sector = this.plugin.sectorService().find(SectorType.SPAWN);

@@ -3,12 +3,10 @@ package net.lightcode.bukkit.scoreboard;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.configuration.impl.MessagesConfiguration;
 import net.lightcode.sector.service.SectorService;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class SpawnScoreboard implements ScoreboardProfileFacade {
 
@@ -16,7 +14,8 @@ public class SpawnScoreboard implements ScoreboardProfileFacade {
 
     private final MessagesConfiguration messagesConfiguration;
 
-    public SpawnScoreboard(SectorService sectorService, MessagesConfiguration messagesConfiguration) {
+    public SpawnScoreboard(SectorService sectorService,
+                           MessagesConfiguration messagesConfiguration) {
         this.sectorService = sectorService;
         this.messagesConfiguration = messagesConfiguration;
     }

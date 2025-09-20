@@ -13,7 +13,7 @@ public class MessagesConfiguration implements Configuration {
 
     private final String sectorIsOfflineMessage, noSectorsAvailableMessage;
 
-    private final String playerDataNotFoundMessage, playerDataLoadedMessage, playerAlreadyConnectedMessage,playerSectorTransferCooldownMessage;
+    private final String playerDataNotFoundMessage, playerDataLoadedMessage, playerAlreadyConnectedMessage, playerSectorTransferCooldownMessage;
 
     private final String spawnSectorNotFoundMessage;
 

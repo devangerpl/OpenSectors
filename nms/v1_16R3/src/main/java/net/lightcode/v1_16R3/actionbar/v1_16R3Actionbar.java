@@ -7,7 +7,8 @@ import org.bukkit.entity.Player;
 
 public class v1_16R3Actionbar implements Actionbar {
     @Override
-    public void sendActionBar(Player player, String message) {
+    public void sendActionBar(Player player,
+                              String message) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
     }
 }

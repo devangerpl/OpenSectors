@@ -142,7 +142,7 @@ public final class BukkitSectorPlugin extends JavaPlugin {
             for (final Player player : this.getServer().getOnlinePlayers()) {
                 final User user = this.userService.find(player.getUniqueId());
 
-                 this.transferService.connect(player, user, sector,true);
+                this.transferService.connect(player, user, sector, true);
             }
         }
 
@@ -203,7 +203,7 @@ public final class BukkitSectorPlugin extends JavaPlugin {
     }
 
     private void checkForUpdates() {
-        UpdaterService updaterService = new UpdaterService(this.getDescription().getVersion(),this.getLogger());
+        UpdaterService updaterService = new UpdaterService(this.getDescription().getVersion(), this.getLogger());
 
         updaterService.check(newestVersion -> this.logger.log(Level.WARNING, List.of(
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",

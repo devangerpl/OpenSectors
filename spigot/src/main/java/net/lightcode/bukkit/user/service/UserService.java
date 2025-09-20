@@ -18,8 +18,9 @@ public class UserService {
         this.userRepository = new UserRepository(networkService);
     }
 
-    public void create(UUID uuid,String name) {
-        this.users.put(uuid,new User(name, uuid));
+    public void create(UUID uuid,
+                       String name) {
+        this.users.put(uuid, new User(name, uuid));
     }
 
     public void remove(UUID uuid) {

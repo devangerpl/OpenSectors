@@ -16,7 +16,9 @@ public class PacketSectorConfigurationRequestListener extends PacketListener<Sec
 
     private final BridgeLogger logger;
 
-    public PacketSectorConfigurationRequestListener(SectorService sectorService, NetworkService networkService, BridgeLogger logger) {
+    public PacketSectorConfigurationRequestListener(SectorService sectorService,
+                                                    NetworkService networkService,
+                                                    BridgeLogger logger) {
         super(SectorConfigurationRequestPacket.class);
 
         this.sectorService = sectorService;

@@ -30,7 +30,9 @@ public class GuiHolder implements InventoryHolder {
         this.inventory = inventory;
     }
 
-    public void setActionOnSlot(int slot, Consumer<InventoryClickEvent> consumer) {
-        this.actions.put(slot, (consumer != null) ? consumer : (event -> {}));
+    public void setActionOnSlot(int slot,
+                                Consumer<InventoryClickEvent> consumer) {
+        this.actions.put(slot, (consumer != null) ? consumer : (event -> {
+        }));
     }
 }

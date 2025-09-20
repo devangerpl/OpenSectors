@@ -6,7 +6,7 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import net.lightcode.packet.Packet;
 import net.lightcode.redis.PacketListener;
-import net.lightcode.redis.codec.MessagePackCodec;
+import net.lightcode.redis.codec.GsonCodec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,9 @@ public class NetworkService {
 
     private String packetSender;
 
-    public NetworkService(String address, int port, String password) {
+    public NetworkService(String address,
+                          int port,
+                          String password) {
         this.subscribedChannels = new ArrayList<>();
 
         RedisClient redisClient = RedisClient.create(RedisURI.builder()
@@ -30,10 +32,10 @@ public class NetworkService {
                 .withPassword(password)
                 .build());
 
-        MessagePackCodec messagePackCodec = new MessagePackCodec();
+        GsonCodec gsonCodec = new GsonCodec();
 
-        this.pubSubConnection = redisClient.connectPubSub(messagePackCodec);
-        this.connection = redisClient.connect(messagePackCodec);
+        this.pubSubConnection = redisClient.connectPubSub(gsonCodec);
+        this.connection = redisClient.connect(gsonCodec);
         this.databaseConnection = redisClient.connect();
     }
 
@@ -44,13 +46,15 @@ public class NetworkService {
         this.connection.close();
     }
 
-    public void publish(String channel, Packet packet) {
+    public void publish(String channel,
+                        Packet packet) {
         packet.sender(this.packetSender);
 
         this.connection.sync().publish(channel, packet);
     }
 
-    public void subscribe(String channel, PacketListener<? extends Packet> listener) {
+    public void subscribe(String channel,
+                          PacketListener<? extends Packet> listener) {
         this.pubSubConnection.addListener(listener);
 
         if (this.subscribedChannels.contains(channel)) return;

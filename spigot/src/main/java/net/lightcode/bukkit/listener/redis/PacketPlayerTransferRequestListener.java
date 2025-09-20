@@ -1,10 +1,10 @@
 package net.lightcode.bukkit.listener.redis;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
+import net.lightcode.bukkit.user.User;
 import net.lightcode.packet.impl.PlayerConnectSectorPacket;
 import net.lightcode.packet.impl.PlayerTransferRequestPacket;
 import net.lightcode.redis.PacketListener;
-import net.lightcode.bukkit.user.User;
 
 public class PacketPlayerTransferRequestListener extends PacketListener<PlayerTransferRequestPacket> {
 

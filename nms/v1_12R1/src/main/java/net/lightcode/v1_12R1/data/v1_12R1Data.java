@@ -21,7 +21,8 @@ public class v1_12R1Data implements Data<Player, Object> {
     }
 
     @Override
-    public void loadData(Player player, Object nbtTagCompound) {
+    public void loadData(Player player,
+                         Object nbtTagCompound) {
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer");
             Object entityPlayer = craftPlayerClass.getMethod("getHandle").invoke(player);

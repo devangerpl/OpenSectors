@@ -13,7 +13,7 @@ public interface NmsService {
 
     NbtConverter<Object> nbtConverter();
 
-    Data<Player,Object> data();
+    Data<Player, Object> data();
 
     MinecraftServer minecraftServer();
 

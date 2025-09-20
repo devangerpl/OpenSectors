@@ -4,5 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface Actionbar {
 
-    void sendActionBar(Player player, String message);
+    void sendActionBar(Player player,
+                       String message);
 }

@@ -25,6 +25,6 @@ public class UserRepository {
     }
 
     public User fetch(String name) {
-        return this.gson.fromJson(this.users.hget("users",name),User.class);
+        return this.gson.fromJson(this.users.hget("users", name), User.class);
     }
 }

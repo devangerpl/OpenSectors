@@ -1,9 +1,8 @@
 package net.lightcode.bukkit.region.service;
 
-import net.lightcode.bukkit.region.BukkitSectorRegion;
 import net.lightcode.bukkit.BukkitSectorPlugin;
+import net.lightcode.bukkit.region.BukkitSectorRegion;
 import net.lightcode.sector.Sector;
-import net.lightcode.sector.type.SectorType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BukkitSectorRegionService {
@@ -24,7 +22,8 @@ public class BukkitSectorRegionService {
         this.plugin = plugin;
     }
 
-    public void create(String name, BukkitSectorRegion bukkitSectorRegion) {
+    public void create(String name,
+                       BukkitSectorRegion bukkitSectorRegion) {
         this.sectorRegions.put(name, bukkitSectorRegion);
     }
 
@@ -67,7 +66,7 @@ public class BukkitSectorRegionService {
     public void knock(Player player) {
         final BukkitSectorRegion sectorRegion = this.currentSectorRegion();
 
-        if(sectorRegion == null) return;
+        if (sectorRegion == null) return;
 
         final Location location = new Location(player.getLocation().getWorld(),
                 sectorRegion.center().getX(),

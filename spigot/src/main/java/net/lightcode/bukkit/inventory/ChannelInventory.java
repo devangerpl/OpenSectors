@@ -2,19 +2,18 @@ package net.lightcode.bukkit.inventory;
 
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.helper.CustomHeadHelper;
+import net.lightcode.bukkit.inventory.api.GuiWindow;
+import net.lightcode.bukkit.inventory.api.builder.ItemBuilder;
+import net.lightcode.bukkit.transfer.PlayerTransferService;
 import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.user.service.UserService;
 import net.lightcode.configuration.impl.MessagesConfiguration;
-import net.lightcode.bukkit.inventory.api.GuiWindow;
-import net.lightcode.bukkit.inventory.api.builder.ItemBuilder;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 import net.lightcode.sector.type.SectorType;
-import net.lightcode.bukkit.transfer.PlayerTransferService;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ChannelInventory {
@@ -22,7 +21,11 @@ public class ChannelInventory {
     private final Player player;
     private final GuiWindow guiWindow;
 
-    public ChannelInventory(Player player, SectorService sectorService, UserService userService, MessagesConfiguration messagesConfiguration, PlayerTransferService playerTransferService) {
+    public ChannelInventory(Player player,
+                            SectorService sectorService,
+                            UserService userService,
+                            MessagesConfiguration messagesConfiguration,
+                            PlayerTransferService playerTransferService) {
         this.player = player;
 
         this.guiWindow = new GuiWindow("&7Kanaly...", 1);
@@ -61,7 +64,7 @@ public class ChannelInventory {
 
                 final User user = userService.find(player.getUniqueId());
 
-                if(user == null) {
+                if (user == null) {
                     player.kickPlayer(ChatHelper.colored(messagesConfiguration.playerDataNotFoundMessage()));
                     return;
                 }

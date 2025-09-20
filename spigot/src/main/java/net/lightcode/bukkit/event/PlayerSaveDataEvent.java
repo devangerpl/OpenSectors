@@ -8,14 +8,12 @@ import org.bukkit.event.HandlerList;
 public class PlayerSaveDataEvent extends Event {
 
     private final HandlerList handlers = new HandlerList();
-
+    private final Player player;
+    private final User user;
     private boolean cancelled;
 
-    private final Player player;
-
-    private final User user;
-
-    public PlayerSaveDataEvent(Player player, User user) {
+    public PlayerSaveDataEvent(Player player,
+                               User user) {
         this.cancelled = false;
         this.player = player;
         this.user = user;
@@ -26,12 +24,12 @@ public class PlayerSaveDataEvent extends Event {
         return this.handlers;
     }
 
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-
     public boolean isCancelled() {
         return this.cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public Player player() {

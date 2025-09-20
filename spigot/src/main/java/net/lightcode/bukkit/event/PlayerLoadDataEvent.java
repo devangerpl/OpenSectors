@@ -7,14 +7,12 @@ import org.bukkit.event.HandlerList;
 
 public class PlayerLoadDataEvent extends Event {
     private final HandlerList handlers = new HandlerList();
-
+    private final Player player;
+    private final User user;
     private boolean cancelled;
 
-    private final Player player;
-
-    private final User user;
-
-    public PlayerLoadDataEvent(Player player, User user) {
+    public PlayerLoadDataEvent(Player player,
+                               User user) {
         this.cancelled = false;
         this.player = player;
         this.user = user;
@@ -25,12 +23,12 @@ public class PlayerLoadDataEvent extends Event {
         return this.handlers;
     }
 
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-
     public boolean isCancelled() {
         return this.cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public Player player() {

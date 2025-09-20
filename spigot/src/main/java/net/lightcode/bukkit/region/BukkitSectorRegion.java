@@ -33,7 +33,10 @@ public class BukkitSectorRegion {
         return this.centerLocation;
     }
 
-    public void setBounds(int minX, int maxX, int minZ, int maxZ) {
+    public void setBounds(int minX,
+                          int maxX,
+                          int minZ,
+                          int maxZ) {
         this.minimumPoint.setX(minX);
         this.minimumPoint.setZ(minZ);
         this.maximumPoint.setX(maxX);

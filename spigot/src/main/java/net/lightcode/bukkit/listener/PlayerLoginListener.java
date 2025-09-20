@@ -31,11 +31,11 @@ public class PlayerLoginListener implements Listener {
 
         final User user = this.plugin.userService().find(player.getUniqueId());
 
-        if(user != null) {
+        if (user != null) {
             this.plugin.logger().log("User data found for player " + player.getName());
             return;
         }
 
-        this.plugin.userService().create(player.getUniqueId(),player.getName());
+        this.plugin.userService().create(player.getUniqueId(), player.getName());
     }
 }

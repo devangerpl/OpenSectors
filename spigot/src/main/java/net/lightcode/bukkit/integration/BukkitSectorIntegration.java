@@ -2,11 +2,11 @@ package net.lightcode.bukkit.integration;
 
 import net.lightcode.NetworkService;
 import net.lightcode.bukkit.BukkitSectorPlugin;
+import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.user.service.UserService;
 import net.lightcode.packet.Packet;
 import net.lightcode.redis.PacketListener;
 import net.lightcode.sector.Sector;
-import net.lightcode.bukkit.user.User;
 import net.lightcode.sector.service.SectorService;
 import org.bukkit.Location;
 
@@ -54,11 +54,13 @@ public class BukkitSectorIntegration {
         return new ArrayList<>(this.instance.userService().users().values());
     }
 
-    public void sendPacket(String channel, Packet packet) {
-       this.instance.networkService().publish(channel, packet);
+    public void sendPacket(String channel,
+                           Packet packet) {
+        this.instance.networkService().publish(channel, packet);
     }
 
-    public void subscribe(String channel, PacketListener<?> listener) {
+    public void subscribe(String channel,
+                          PacketListener<?> listener) {
         this.instance.networkService().subscribe(channel, listener);
     }
 

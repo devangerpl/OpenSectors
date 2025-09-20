@@ -1,7 +1,7 @@
 package net.lightcode.bukkit.listener.redis;
 
-import net.lightcode.bukkit.region.BukkitSectorRegion;
 import net.lightcode.bukkit.BukkitSectorPlugin;
+import net.lightcode.bukkit.region.BukkitSectorRegion;
 import net.lightcode.packet.impl.SectorConfigurationResponsePacket;
 import net.lightcode.redis.PacketListener;
 import net.lightcode.sector.Sector;
@@ -20,7 +20,7 @@ public class PacketSectorConfigurationResponseListener extends PacketListener<Se
 
     @Override
     public void handle(SectorConfigurationResponsePacket packet) {
-        if(packet.sectors() == null) {
+        if (packet.sectors() == null) {
             this.plugin.logger().severe("No found sector with name " + this.plugin.sectorService().currentSectorId());
 
             this.plugin.getServer().shutdown();

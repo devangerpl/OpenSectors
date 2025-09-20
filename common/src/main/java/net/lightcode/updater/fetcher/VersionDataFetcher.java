@@ -9,13 +9,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VersionDataFetcher {
-    public static String fetch(Logger logger,String urlString) {
+    public static String fetch(Logger logger,
+                               String urlString) {
         if (urlString == null) return "0.0";
 
         try {

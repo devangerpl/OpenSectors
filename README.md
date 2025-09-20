@@ -6,16 +6,17 @@
 
 ## ✨ Features
 
-- 🚪 Smooth teleportation between sectors on border crossing  
-- 🔄 Real-time player data synchronization  
-- 🧭 Shared and synced sector information  
-- 💬 Global player chat synchronized across all sectors  
+- 🚪 Smooth teleportation between sectors on border crossing
+- 🔄 Real-time player data synchronization
+- 🧭 Shared and synced sector information
+- 💬 Global player chat synchronized across all sectors
 
 ---
 
 - 🔗 Wiki [Click](https://github.com/fajzu1/OpenSectors/wiki)
 
 ---
+
 ## ⏯ Video
 
 ![](assets/video-example.gif)<br/>
@@ -24,15 +25,16 @@
 
 ## 🧰 Requirements
 
-- 🌐 1x [Velocity](https://velocitypowered.com/) proxy server  
-- 🧱 Minimum 2x Spigot/Paper servers  
+- 🌐 1x [Velocity](https://velocitypowered.com/) proxy server
+- 🧱 Minimum 2x Spigot/Paper servers
 - ⚡ 1x Redis instance (data distribution & sync)
 
 ---
 
 ## ⚙️ Configuration
 
-Setting up sectors is simple and straightforward. Define the area for each sector and configure your Redis instance in the config files.
+Setting up sectors is simple and straightforward. Define the area for each sector and configure your Redis instance in
+the config files.
 
 ### 🗺️ Sectors Configuration
 

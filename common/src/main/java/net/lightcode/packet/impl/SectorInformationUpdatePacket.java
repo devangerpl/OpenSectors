@@ -11,7 +11,8 @@ public class SectorInformationUpdatePacket extends Packet {
         this(0, 0);
     }
 
-    public SectorInformationUpdatePacket(int players, double tps) {
+    public SectorInformationUpdatePacket(int players,
+                                         double tps) {
         this.players = players;
         this.tps = tps;
     }

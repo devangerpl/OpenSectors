@@ -9,10 +9,11 @@ public class PlayerSendMessagePacket extends Packet {
     private final String message;
 
     public PlayerSendMessagePacket() {
-        this(null,null);
+        this(null, null);
     }
 
-    public PlayerSendMessagePacket(String name,String message) {
+    public PlayerSendMessagePacket(String name,
+                                   String message) {
         this.name = name;
         this.message = message;
     }

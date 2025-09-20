@@ -28,17 +28,21 @@ public class BukkitLogger {
         this.logger.log(Level.INFO, message);
     }
 
-    public void log(Level level, List<String> messages) {
+    public void log(Level level,
+                    List<String> messages) {
         for (String message : messages) {
             this.logger.log(level, message);
         }
     }
 
-    public void log(Level level, String message) {
+    public void log(Level level,
+                    String message) {
         this.logger.log(level, message);
     }
 
-    public void log(Level level, String message, Throwable throwable) {
+    public void log(Level level,
+                    String message,
+                    Throwable throwable) {
         this.logger.log(level, message, throwable);
     }
 

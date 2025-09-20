@@ -7,7 +7,8 @@ import java.lang.reflect.Constructor;
 
 public class v1_13R2Actionbar implements Actionbar {
     @Override
-    public void sendActionBar(Player player, String message) {
+    public void sendActionBar(Player player,
+                              String message) {
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer");
             Object entityPlayer = craftPlayerClass.getMethod("getHandle").invoke(player);

@@ -9,7 +9,10 @@ import java.lang.reflect.Method;
 
 public class v1_16R3Border implements Border {
     @Override
-    public void sendWorldBorder(Player player, double size, double centerX, double centerZ) {
+    public void sendWorldBorder(Player player,
+                                double size,
+                                double centerX,
+                                double centerZ) {
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer");
             Object handle = craftPlayerClass.getMethod("getHandle").invoke(player);

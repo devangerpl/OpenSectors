@@ -3,9 +3,6 @@ package net.lightcode.v1_17R1.converter;
 import net.lightcode.converter.NbtConverter;
 import net.minecraft.nbt.TagParser;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class v1_17R1NbtConverter implements NbtConverter<Object> {
 
     @Override

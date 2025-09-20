@@ -8,14 +8,13 @@ import org.bukkit.event.HandlerList;
 public class PlayerSectorChangeEvent extends Event {
 
     private final HandlerList handlers = new HandlerList();
-
+    private final Sector currentSector, newSector;
+    private final Player player;
     private boolean cancelled;
 
-    private final Sector currentSector, newSector;
-
-    private final Player player;
-
-    public PlayerSectorChangeEvent(Player player, Sector currentSector, Sector newSector) {
+    public PlayerSectorChangeEvent(Player player,
+                                   Sector currentSector,
+                                   Sector newSector) {
         this.player = player;
         this.currentSector = currentSector;
         this.newSector = newSector;
@@ -27,12 +26,12 @@ public class PlayerSectorChangeEvent extends Event {
         return this.handlers;
     }
 
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-
     public boolean isCancelled() {
         return this.cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public Sector currentSector() {

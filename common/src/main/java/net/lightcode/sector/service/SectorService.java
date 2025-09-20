@@ -2,11 +2,8 @@ package net.lightcode.sector.service;
 
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.type.SectorType;
-import org.bukkit.Location;
-import org.bukkit.util.Vector;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SectorService {
@@ -33,7 +30,8 @@ public class SectorService {
                 .orElse(null);
     }
 
-    public void create(String id, Sector sector) {
+    public void create(String id,
+                       Sector sector) {
         this.sectors.put(id, sector);
     }
 

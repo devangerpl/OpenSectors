@@ -20,7 +20,10 @@ public class ChannelCommand implements CommandExecutor {
 
     private final MessagesConfiguration messagesConfiguration;
 
-    public ChannelCommand(UserService userService, SectorService sectorService, PlayerTransferService transferService, MessagesConfiguration messagesConfiguration) {
+    public ChannelCommand(UserService userService,
+                          SectorService sectorService,
+                          PlayerTransferService transferService,
+                          MessagesConfiguration messagesConfiguration) {
         this.userService = userService;
         this.sectorService = sectorService;
         this.transferService = transferService;
@@ -28,7 +31,10 @@ public class ChannelCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender,
+                             Command command,
+                             String s,
+                             String[] strings) {
         Player player = (Player) commandSender;
 
         ChannelInventory channelInventory = new ChannelInventory(player, this.sectorService, this.userService, this.messagesConfiguration, this.transferService);

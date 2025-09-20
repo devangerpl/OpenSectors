@@ -9,7 +9,8 @@ public class PlayerConnectSectorPacket extends Packet {
         this(null, null);
     }
 
-    public PlayerConnectSectorPacket(String name, String sectorName) {
+    public PlayerConnectSectorPacket(String name,
+                                     String sectorName) {
         this.name = name;
         this.sectorName = sectorName;
     }

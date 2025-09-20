@@ -7,7 +7,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ItemBuilder {
@@ -22,7 +24,8 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder unsafeEnchantment(Enchantment enchantment, int level) {
+    public ItemBuilder unsafeEnchantment(Enchantment enchantment,
+                                         int level) {
         this.itemStack.addUnsafeEnchantment(enchantment, level);
         return this;
     }
@@ -37,7 +40,8 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder enchant(Enchantment enchantment, int level) {
+    public ItemBuilder enchant(Enchantment enchantment,
+                               int level) {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         itemMeta.addEnchant(enchantment, level, true);
         this.itemStack.setItemMeta(itemMeta);
@@ -77,7 +81,8 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder lore(String line, int pos) {
+    public ItemBuilder lore(String line,
+                            int pos) {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         if (itemMeta == null) return this;
 
@@ -97,7 +102,7 @@ public class ItemBuilder {
     public ItemBuilder lore(List<String> lore) {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         if (itemMeta == null) return this;
-        
+
         List<String> coloredLore = lore.stream()
                 .map(ChatHelper::colored)
                 .collect(Collectors.toList());

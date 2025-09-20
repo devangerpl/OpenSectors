@@ -8,7 +8,10 @@ import java.lang.reflect.Method;
 
 public class v1_10R1Border implements Border {
     @Override
-    public void sendWorldBorder(Player player, double size, double centerX, double centerZ) {
+    public void sendWorldBorder(Player player,
+                                double size,
+                                double centerX,
+                                double centerZ) {
         try {
             Object worldBorder = Class.forName("net.minecraft.server.v1_10_R1.WorldBorder").newInstance();
 

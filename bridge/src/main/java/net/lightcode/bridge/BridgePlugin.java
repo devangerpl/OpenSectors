@@ -36,7 +36,8 @@ public class BridgePlugin {
     private ConfigurationService configurationService;
 
     @Inject
-    public BridgePlugin(ProxyServer server, Logger logger) {
+    public BridgePlugin(ProxyServer server,
+                        Logger logger) {
         this.server = server;
         this.logger = new BridgeLogger(logger);
 
@@ -87,17 +88,21 @@ public class BridgePlugin {
     }
 
     private void checkForUpdates() {
-        UpdaterService updaterService = new UpdaterService("3.5", java.util.logging.Logger.getAnonymousLogger());
+        UpdaterService updaterService = new UpdaterService("3.6", java.util.logging.Logger.getAnonymousLogger());
 
         updaterService.check(newestVersion -> this.logger.warning(List.of(
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
                 "⚠️ A new version of OpenSectors! ⚠️",
-                "Current version: 3.5",
+                "Current version: 3.6",
                 "Available version: " + newestVersion,
                 "",
                 "Download at: https://github.com/fajzu1/OpenSectors",
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         )));
+    }
+
+    public NetworkService networkService() {
+        return this.networkService;
     }
 
     public SectorService sectorService() {

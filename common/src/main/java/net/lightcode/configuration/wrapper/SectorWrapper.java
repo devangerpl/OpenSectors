@@ -10,7 +10,12 @@ public class SectorWrapper {
 
     private final int minX, maxX, minZ, maxZ;
 
-    public SectorWrapper(String name, SectorType sectorType, int minX, int maxX, int minZ, int maxZ) {
+    public SectorWrapper(String name,
+                         SectorType sectorType,
+                         int minX,
+                         int maxX,
+                         int minZ,
+                         int maxZ) {
         this.name = name;
         this.sectorType = sectorType;
         this.minX = minX;

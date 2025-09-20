@@ -15,7 +15,8 @@ public class ScoreboardPlayerService {
         this.profile = profile;
     }
 
-    public void create(UUID uuid, ScoreboardPlayer scoreboardPlayer) {
+    public void create(UUID uuid,
+                       ScoreboardPlayer scoreboardPlayer) {
         this.scoreboardPlayers.put(uuid, scoreboardPlayer);
     }
 

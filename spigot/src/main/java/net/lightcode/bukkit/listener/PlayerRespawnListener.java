@@ -29,13 +29,13 @@ public class PlayerRespawnListener implements Listener {
             return;
         }
 
-        if(sector == null) {
+        if (sector == null) {
             player.kickPlayer(ChatHelper.colored(this.plugin.messagesConfiguration().spawnSectorNotFoundMessage()));
             return;
         }
 
         event.setRespawnLocation(this.plugin.bukkitSectorRegionService().randomLocation(sector));
 
-        this.plugin.transferService().connect(player, user, sector,false);
+        this.plugin.transferService().connect(player, user, sector, false);
     }
 }

@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerJoinListener implements Listener {
@@ -28,18 +27,18 @@ public class PlayerJoinListener implements Listener {
         final Player player = event.getPlayer();
         final User user = this.plugin.userService().find(player.getUniqueId());
 
-        if(user == null) {
+        if (user == null) {
             player.kickPlayer(ChatHelper.colored(this.plugin.messagesConfiguration().playerDataNotFoundMessage()));
             return;
         }
 
-        if(user.isRedirecting()) {
-            user.loadData(player,this.plugin);
+        if (user.isRedirecting()) {
+            user.loadData(player, this.plugin);
 
             user.setRedirecting(false);
             user.setTransferCooldown(true);
 
-            player.sendMessage(ChatHelper.colored(this.plugin.messagesConfiguration().playerDataLoadedMessage()).replace("{TIME}",String.valueOf(stopwatch.elapsed(TimeUnit.MILLISECONDS))));
+            player.sendMessage(ChatHelper.colored(this.plugin.messagesConfiguration().playerDataLoadedMessage()).replace("{TIME}", String.valueOf(stopwatch.elapsed(TimeUnit.MILLISECONDS))));
         }
 
         player.sendTitle(ChatHelper.colored(this.plugin.messagesConfiguration().connectedInfoTitle()), ChatHelper.colored(this.plugin.messagesConfiguration().connectedInfoSubTitle()).replace("{SECTOR}", this.plugin.sectorService().currentSectorId()));

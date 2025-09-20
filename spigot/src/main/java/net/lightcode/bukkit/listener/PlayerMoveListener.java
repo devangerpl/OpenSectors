@@ -1,14 +1,14 @@
 package net.lightcode.bukkit.listener;
 
-import net.lightcode.bukkit.user.User;
-import net.lightcode.configuration.impl.MessagesConfiguration;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.region.service.BukkitSectorRegionService;
+import net.lightcode.bukkit.transfer.PlayerTransferService;
+import net.lightcode.bukkit.user.User;
+import net.lightcode.bukkit.user.service.UserService;
+import net.lightcode.configuration.impl.MessagesConfiguration;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 import net.lightcode.sector.type.SectorType;
-import net.lightcode.bukkit.transfer.PlayerTransferService;
-import net.lightcode.bukkit.user.service.UserService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +27,11 @@ public class PlayerMoveListener implements Listener {
 
     private final MessagesConfiguration messagesConfiguration;
 
-    public PlayerMoveListener(SectorService sectorService, UserService userService, BukkitSectorRegionService bukkitSectorRegionService, PlayerTransferService transferService, MessagesConfiguration messagesConfiguration) {
+    public PlayerMoveListener(SectorService sectorService,
+                              UserService userService,
+                              BukkitSectorRegionService bukkitSectorRegionService,
+                              PlayerTransferService transferService,
+                              MessagesConfiguration messagesConfiguration) {
         this.sectorService = sectorService;
         this.userService = userService;
         this.bukkitSectorRegionService = bukkitSectorRegionService;
@@ -66,6 +70,6 @@ public class PlayerMoveListener implements Listener {
 
         user.setRedirecting(true);
 
-        this.transferService.connect(player, user, sector,false);
+        this.transferService.connect(player, user, sector, false);
     }
 }
