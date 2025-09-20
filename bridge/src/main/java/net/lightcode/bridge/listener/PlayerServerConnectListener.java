@@ -20,18 +20,12 @@ public class PlayerServerConnectListener {
     public void onServerPreConnect(ServerPreConnectEvent event) {
         final Player player = event.getPlayer();
 
-        Sector sector = this.plugin.sectorService().find(
-                this.plugin.networkService().databaseConnection().sync().get(player.getUsername())
-        );
+        String lastSector = this.plugin.networkService().databaseConnection().sync().get(player.getUniqueId().toString());
 
-        if (sector == null || sector.sectorType() == SectorType.SPAWN) {
-            sector = this.plugin.sectorService().find(SectorType.SPAWN);
-        }
+        Sector sector = this.plugin.sectorService().find(SectorType.SPAWN);
 
-        if (sector == null) {
-            player.disconnect(Component.text("Brak dostępnych serwerów."));
-            event.setResult(ServerPreConnectEvent.ServerResult.denied());
-            return;
+        if(lastSector != null) {
+            sector = this.plugin.sectorService().find(lastSector);
         }
 
         this.plugin.networkService().databaseConnection().sync().set(player.getUniqueId().toString(), sector.id());
