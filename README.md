@@ -4,6 +4,15 @@
 
 ---
 
+> [!WARNING]
+> **This branch is currently under active development**
+>
+> ⚠️ Features may be incomplete or unstable.  
+> ❌ This branch is **unstable** and should not be used on the main/production server.  
+> ✅ Use it only for testing or development purposes.
+
+---
+
 ## ✨ Features
 
 - 🚪 Smooth teleportation between sectors on border crossing
