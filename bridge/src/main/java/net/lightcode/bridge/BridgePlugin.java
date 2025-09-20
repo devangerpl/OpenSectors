@@ -88,12 +88,12 @@ public class BridgePlugin {
     }
 
     private void checkForUpdates() {
-        UpdaterService updaterService = new UpdaterService("3.6", java.util.logging.Logger.getAnonymousLogger());
+        UpdaterService updaterService = new UpdaterService("3.6.1", java.util.logging.Logger.getAnonymousLogger());
 
         updaterService.check(newestVersion -> this.logger.warning(List.of(
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
                 "⚠️ A new version of OpenSectors! ⚠️",
-                "Current version: 3.6",
+                "Current version: 3.6.1",
                 "Available version: " + newestVersion,
                 "",
                 "Download at: https://github.com/fajzu1/OpenSectors",
