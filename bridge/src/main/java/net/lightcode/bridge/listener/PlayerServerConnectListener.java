@@ -35,6 +35,8 @@ public class PlayerServerConnectListener {
             return;
         }
 
+        this.plugin.networkService().databaseConnection().sync().set(player.getUniqueId().toString(), sector.id());
+
         this.plugin.server().getServer(sector.id()).ifPresentOrElse(server ->
                         event.setResult(ServerPreConnectEvent.ServerResult.allowed(server)),
                 () -> {

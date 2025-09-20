@@ -38,6 +38,8 @@ public class PacketPlayerConnectSectorListener extends PacketListener<PlayerConn
         RegisteredServer registeredServer = serverOptional.get();
         this.plugin.logger().log("Found registered server: {}, sending connection request...", registeredServer.getServerInfo().getName());
 
+        this.plugin.networkService().databaseConnection().sync().set(player.getUniqueId().toString(), registeredServer.getServerInfo().getName());
+
         player.createConnectionRequest(registeredServer).connect();
         this.plugin.logger().log("Connection request sent to player: {}", player.getUsername());
     }
