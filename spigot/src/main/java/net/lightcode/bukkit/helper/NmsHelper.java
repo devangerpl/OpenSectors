@@ -26,7 +26,7 @@ public class NmsHelper {
 
         String version = plugin.getServer().getBukkitVersion();
         String clean = version.split("-")[0];
-        String[] nums = clean.split("\\.");  ]
+        String[] nums = clean.split("\\."); 
 
         return "v" + nums[0] + "_" + nums[1] + "R1";
     }
