@@ -6,7 +6,7 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import net.lightcode.packet.Packet;
 import net.lightcode.redis.PacketListener;
-import net.lightcode.redis.codec.GsonCodec;
+import net.lightcode.redis.codec.MessagePackCodec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,10 @@ public class NetworkService {
                 .withPassword(password)
                 .build());
 
-        GsonCodec gsonCodec = new GsonCodec();
+        MessagePackCodec messagePackCodec = new MessagePackCodec();
 
-        this.pubSubConnection = redisClient.connectPubSub(gsonCodec);
-        this.connection = redisClient.connect(gsonCodec);
+        this.pubSubConnection = redisClient.connectPubSub(messagePackCodec);
+        this.connection = redisClient.connect(messagePackCodec);
         this.databaseConnection = redisClient.connect();
     }
 

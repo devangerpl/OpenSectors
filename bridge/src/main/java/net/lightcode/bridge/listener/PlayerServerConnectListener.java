@@ -18,8 +18,7 @@ public class PlayerServerConnectListener {
 
     @Subscribe
     public void onServerPreConnect(ServerPreConnectEvent event) {
-        Player player = event.getPlayer();
-        ;
+        final Player player = event.getPlayer();
 
         Sector sector = this.plugin.sectorService().find(
                 this.plugin.networkService().databaseConnection().sync().get(player.getUsername())
