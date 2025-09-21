@@ -1,4 +1,4 @@
-package net.lightcode.packet;
+package net.lightcode.network.packet;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

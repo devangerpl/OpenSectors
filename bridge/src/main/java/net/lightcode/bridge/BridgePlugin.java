@@ -5,7 +5,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.lightcode.NetworkService;
+import net.lightcode.network.NetworkService;
 import net.lightcode.bridge.listener.PlayerServerConnectListener;
 import net.lightcode.bridge.listener.redis.PacketPlayerConnectSectorListener;
 import net.lightcode.bridge.listener.redis.PacketSectorConfigurationRequestListener;
@@ -23,7 +23,7 @@ import java.util.List;
 @Plugin(
         id = "opensectors-bridge",
         name = "opensectors-bridge",
-        version = "3.0",
+        version = "3.6.2",
         authors = "fajzu"
 )
 public class BridgePlugin {
@@ -72,8 +72,7 @@ public class BridgePlugin {
             this.sectorService.create(id, new Sector(sectorWrapper.name(), sectorWrapper.sectorType(), sectorWrapper.minX(), sectorWrapper.maxX(), sectorWrapper.minZ(), sectorWrapper.maxZ()));
         });
 
-        this.networkService = new NetworkService(databaseConfiguration.redisHost(), databaseConfiguration.redisPort(), databaseConfiguration.redisPassword());
-        this.networkService.setPacketSender("bridge");
+        this.networkService = new NetworkService(databaseConfiguration.redisHost(), databaseConfiguration.redisPort(), databaseConfiguration.redisPassword(), "bridge");
         this.logger.log("Initialized with Redis");
 
         this.networkService.subscribe("bridge", new PacketSectorConfigurationRequestListener(this.sectorService, this.networkService, this.logger));
@@ -82,18 +81,18 @@ public class BridgePlugin {
         this.server.getEventManager().register(this, new PlayerServerConnectListener(this));
         this.logger.log("Bridge listeners registered");
 
-        this.checkForUpdates();
+        this.checkForUpdates("3.6.2");
 
         this.logger.log("Bridge initialization complete!");
     }
 
-    private void checkForUpdates() {
-        UpdaterService updaterService = new UpdaterService("3.6.1", java.util.logging.Logger.getAnonymousLogger());
+    private void checkForUpdates(String currentVersion) {
+        UpdaterService updaterService = new UpdaterService(currentVersion, java.util.logging.Logger.getAnonymousLogger());
 
         updaterService.check(newestVersion -> this.logger.warning(List.of(
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
                 "⚠️ A new version of OpenSectors! ⚠️",
-                "Current version: 3.6.1",
+                "Current version: " + currentVersion,
                 "Available version: " + newestVersion,
                 "",
                 "Download at: https://github.com/fajzu1/OpenSectors",

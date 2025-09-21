@@ -1,7 +1,6 @@
-package net.lightcode.redis;
+package net.lightcode.network.packet;
 
 import io.lettuce.core.pubsub.RedisPubSubListener;
-import net.lightcode.packet.Packet;
 
 public abstract class PacketListener<T extends Packet> implements RedisPubSubListener<String, Packet> {
     private final Class<T> packetClass;

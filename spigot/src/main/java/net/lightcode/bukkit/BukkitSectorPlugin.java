@@ -1,6 +1,6 @@
 package net.lightcode.bukkit;
 
-import net.lightcode.NetworkService;
+import net.lightcode.network.NetworkService;
 import net.lightcode.bukkit.listener.redis.PacketPlayerSendMessageListener;
 import net.lightcode.bukkit.listener.redis.PacketSectorConfigurationResponseListener;
 import net.lightcode.bukkit.listener.redis.PacketSectorInformationUpdateListener;
@@ -18,7 +18,7 @@ import net.lightcode.configuration.impl.SectorConfiguration;
 import net.lightcode.configuration.service.ConfigurationService;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.helper.NmsHelper;
-import net.lightcode.packet.impl.SectorConfigurationRequestPacket;
+import net.lightcode.network.packet.impl.SectorConfigurationRequestPacket;
 import net.lightcode.bukkit.runnable.ActionBarNotificationRunnable;
 import net.lightcode.bukkit.runnable.ScoreboardUpdateRunnable;
 import net.lightcode.bukkit.runnable.SectorBorderUpdateRunnable;
@@ -92,8 +92,13 @@ public final class BukkitSectorPlugin extends JavaPlugin {
         this.bukkitSectorRegionService = new BukkitSectorRegionService(this);
         this.transferService = new PlayerTransferService(this);
 
-        this.networkService = new NetworkService(databaseConfiguration.redisHost(), databaseConfiguration.redisPort(), databaseConfiguration.redisPassword());
-        this.networkService.setPacketSender(this.sectorService.currentSectorId());
+        this.networkService = new NetworkService(
+                databaseConfiguration.redisHost(),
+                databaseConfiguration.redisPort(),
+                databaseConfiguration.redisPassword(),
+                this.sectorService.currentSectorId()
+        );
+
         this.logger.log("NetworkService started with sender: " + this.sectorService.currentSectorId());
 
         this.userService = new UserService(this.networkService);
@@ -122,6 +127,8 @@ public final class BukkitSectorPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         this.logger.log("Plugin disabling...");
+
+        if(this.sectorService == null) return;
 
         if (this.sectorService.currentSector().sectorType() == SectorType.SPAWN) {
             this.logger.log("Current sector is SPAWN. Handling player transfer or kick.");
@@ -182,26 +189,6 @@ public final class BukkitSectorPlugin extends JavaPlugin {
         this.logger.fine("OpenSectors successfully initialized and ready to use.");
     }
 
-    public PlayerTransferService transferService() {
-        return this.transferService;
-    }
-
-    public UserService userService() {
-        return this.userService;
-    }
-
-    public NetworkService networkService() {
-        return this.networkService;
-    }
-
-    public SectorService sectorService() {
-        return this.sectorService;
-    }
-
-    public BukkitSectorRegionService bukkitSectorRegionService() {
-        return this.bukkitSectorRegionService;
-    }
-
     private void checkForUpdates() {
         UpdaterService updaterService = new UpdaterService(this.getDescription().getVersion(), this.getLogger());
 
@@ -234,6 +221,26 @@ public final class BukkitSectorPlugin extends JavaPlugin {
         });
 
         this.logger.log("All event listeners initialized.");
+    }
+
+    public PlayerTransferService transferService() {
+        return this.transferService;
+    }
+
+    public UserService userService() {
+        return this.userService;
+    }
+
+    public NetworkService networkService() {
+        return this.networkService;
+    }
+
+    public SectorService sectorService() {
+        return this.sectorService;
+    }
+
+    public BukkitSectorRegionService bukkitSectorRegionService() {
+        return this.bukkitSectorRegionService;
     }
 
     public MessagesConfiguration messagesConfiguration() {

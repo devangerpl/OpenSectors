@@ -6,6 +6,7 @@ import net.lightcode.bukkit.event.PlayerSaveDataEvent;
 import net.lightcode.bukkit.helper.ChatHelper;
 import net.lightcode.bukkit.helper.SerializeHelper;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -15,7 +16,9 @@ public class User {
     private final String name;
     private final UUID uuid;
 
-    private String serializedData, serializedLocation, gameMode;
+    private String serializedData, gameMode;
+
+    private byte[] serializedLocation;
 
     private int heldSlot;
     private long redirectTime, transferCooldown;
@@ -38,18 +41,15 @@ public class User {
 
         if (event.isCancelled()) return;
 
-        try {
-            player.teleport(SerializeHelper.deserializeLocation(this.serializedLocation));
-            player.getInventory().setHeldItemSlot(heldSlot);
-            player.setGameMode(GameMode.valueOf(gameMode));
+        Location location = (Location) SerializeHelper.deserialize(this.serializedLocation);
 
-            Object nbtCompound = plugin.nmsService().nbtConverter().convertStringToNBTCompound(this.serializedData);
+        player.teleport(location);
+        player.getInventory().setHeldItemSlot(heldSlot);
+        player.setGameMode(GameMode.valueOf(gameMode));
 
-            plugin.nmsService().data().loadData(player, nbtCompound);
-        } catch (Exception exception) {
-            player.kickPlayer(ChatHelper.colored(plugin.messagesConfiguration().playerDataNotFoundMessage()));
-            plugin.getLogger().severe("Failed to load player data for " + player.getName());
-        }
+        Object nbtCompound = plugin.nmsService().nbtConverter().convertStringToNBTCompound(this.serializedData);
+
+        plugin.nmsService().data().loadData(player, nbtCompound);
     }
 
     public void saveData(Player player,
@@ -59,7 +59,7 @@ public class User {
 
         if (event.isCancelled()) return;
 
-        this.serializedLocation = SerializeHelper.serializeLocation(player.getLocation());
+        this.serializedLocation = SerializeHelper.serialize(player.getLocation());
         this.serializedData = plugin.nmsService().data().saveData(player);
 
         this.gameMode = player.getGameMode().name();

@@ -2,8 +2,8 @@ package net.lightcode.bukkit.listener.redis;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.helper.ChatHelper;
-import net.lightcode.packet.impl.PlayerSendMessagePacket;
-import net.lightcode.redis.PacketListener;
+import net.lightcode.network.packet.impl.PlayerSendMessagePacket;
+import net.lightcode.network.packet.PacketListener;
 
 public class PacketPlayerSendMessageListener extends PacketListener<PlayerSendMessagePacket> {
 

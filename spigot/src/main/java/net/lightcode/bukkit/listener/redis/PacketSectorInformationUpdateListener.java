@@ -1,7 +1,7 @@
 package net.lightcode.bukkit.listener.redis;
 
-import net.lightcode.packet.impl.SectorInformationUpdatePacket;
-import net.lightcode.redis.PacketListener;
+import net.lightcode.network.packet.impl.SectorInformationUpdatePacket;
+import net.lightcode.network.packet.PacketListener;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 

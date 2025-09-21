@@ -28,22 +28,13 @@ public class PlayerServerConnectListener {
                 .sync()
                 .get(player.getUniqueId().toString());
 
-        Sector sector = this.plugin.sectorService().find(SectorType.SPAWN);
-
-        if (lastSector != null) {
-            Sector foundSector = this.plugin.sectorService().find(lastSector);
-
-            if (foundSector != null) {
-                sector = foundSector;
-            }
-
-        }
+        if (lastSector == null) return;
 
         this.plugin.networkService().databaseConnection()
                 .sync()
-                .set(player.getUniqueId().toString(), sector.id());
+                .set(player.getUniqueId().toString(), lastSector);
 
-        this.plugin.server().getServer(sector.id()).ifPresentOrElse(server -> event.setResult(ServerPreConnectEvent.ServerResult.allowed(server)),
+        this.plugin.server().getServer(lastSector).ifPresentOrElse(server -> event.setResult(ServerPreConnectEvent.ServerResult.allowed(server)),
                 () -> {
                     player.disconnect(Component.text("Brak dostępnych serwerów."));
                     event.setResult(ServerPreConnectEvent.ServerResult.denied());

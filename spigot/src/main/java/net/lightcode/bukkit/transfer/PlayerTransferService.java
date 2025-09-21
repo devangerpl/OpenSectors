@@ -3,7 +3,7 @@ package net.lightcode.bukkit.transfer;
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.event.PlayerSectorChangeEvent;
 import net.lightcode.bukkit.user.User;
-import net.lightcode.packet.impl.PlayerTransferRequestPacket;
+import net.lightcode.network.packet.impl.PlayerTransferRequestPacket;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.type.SectorType;
 import org.bukkit.entity.Player;
@@ -21,10 +21,10 @@ public class PlayerTransferService {
     public void connect(final Player player,
                         final User user,
                         final Sector sector,
-                        boolean channelTransfer) {
+                        boolean transferCheck) {
         if (sector.sectorType() == SectorType.SPAWN
                 && this.plugin.sectorService().currentSector().sectorType() == SectorType.SPAWN
-                && !channelTransfer) return;
+                && !transferCheck) return;
 
         this.plugin.getLogger().info("Starting connection process for player " + player.getName() + " to sector " + sector.id());
 
@@ -43,11 +43,9 @@ public class PlayerTransferService {
 
             this.plugin.getLogger().info("Saving user data for player " + player.getName());
 
-            CompletableFuture.runAsync(() -> {
-                user.saveData(player, this.plugin);
+            user.saveData(player, this.plugin);
 
-                this.plugin.userService().userRepository().update(user);
-            }).thenAccept(unused -> {
+            CompletableFuture.runAsync(() -> this.plugin.userService().userRepository().update(user)).thenAccept(unused -> {
                 this.plugin.networkService().publish(sector.id(), new PlayerTransferRequestPacket(player.getName()));
 
                 this.plugin.getLogger().info("Connection process finished for player " + player.getName());

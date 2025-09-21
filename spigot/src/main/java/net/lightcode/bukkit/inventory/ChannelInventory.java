@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChannelInventory {
 
@@ -32,22 +33,34 @@ public class ChannelInventory {
 
         int i = 0;
 
-        for (Sector sector : sectorService.sectors().values()) {
-            if (!sector.sectorType().equals(SectorType.SPAWN)) continue;
+        for (Sector sector : sectorService
+                .sectors()
+                .values()
+                .stream()
+                .filter(sector -> sector.sectorType().equals(SectorType.SPAWN))
+                .collect(Collectors.toList())) {
 
-            ItemStack itemStack = (sector.isOnline() ? CustomHeadHelper.create("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGEyZjljNzYxZmMxMzFkYmViZDA3M2IwYjFkZDdkMWJhZWExOTFjZTlkMzNjNDljM2FjYTk0NDhiMWI2YjY4NCJ9fX0=") : CustomHeadHelper.create("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWIwZTA3NjMyMmZjOWFmNzk1OTJlYjg1MmNhOGM3YzQ1YmIyYzNjZWFiYzNjMGU4YTZhMWUwNGI0Y2UzZDM0YiJ9fX0="));
-            ItemBuilder sectorItem = new ItemBuilder(itemStack).name("&7Sektor &a" + sector.id());
+            ItemStack itemStack = (sector.isOnline() ?
+                    CustomHeadHelper.create("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGEyZjljNzYxZmMxMzFkYmViZDA3M2IwYjFkZDdkMWJhZWExOTFjZTlkMzNjNDljM2FjYTk0NDhiMWI2YjY4NCJ9fX0=")
+                    :
+                    CustomHeadHelper.create("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWIwZTA3NjMyMmZjOWFmNzk1OTJlYjg1MmNhOGM3YzQ1YmIyYzNjZWFiYzNjMGU4YTZhMWUwNGI0Y2UzZDM0YiJ9fX0="));
+            ItemBuilder sectorItem = new ItemBuilder(itemStack)
+                    .name(
+                            "&7Sektor &a" + sector.id()
+                    );
 
             sectorItem.lore(sector.isOnline() ?
                     List.of(
                             "",
-                            ChatHelper.colored("&7Online: &a" + sector.players()),
-                            ChatHelper.colored("&7TPS: &a" + ChatHelper.formatTps(sector.tps())),
+                            "&7Online: &a" + sector.players(),
+                            "&7TPS: &a" + ChatHelper.formatTps(sector.tps()),
                             "")
                     :
                     List.of(
                             "",
-                            ChatHelper.colored("&cSektor jest offline")));
+                            "&cSektor jest offline",
+                            ""
+                    ));
 
             sectorItem.lore(sector.id().equals(sectorService.currentSectorId()) ? "&eZnajdujesz sie na tym kanale" : "&eKliknij aby polaczyc sie z kanalem");
 

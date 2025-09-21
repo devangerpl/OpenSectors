@@ -1,10 +1,10 @@
 package net.lightcode.bridge.listener.redis;
 
-import net.lightcode.NetworkService;
+import net.lightcode.network.NetworkService;
 import net.lightcode.bridge.BridgeLogger;
-import net.lightcode.packet.impl.SectorConfigurationRequestPacket;
-import net.lightcode.packet.impl.SectorConfigurationResponsePacket;
-import net.lightcode.redis.PacketListener;
+import net.lightcode.network.packet.impl.SectorConfigurationRequestPacket;
+import net.lightcode.network.packet.impl.SectorConfigurationResponsePacket;
+import net.lightcode.network.packet.PacketListener;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 

@@ -1,7 +1,7 @@
 package net.lightcode.bukkit.listener;
 
-import net.lightcode.NetworkService;
-import net.lightcode.packet.impl.PlayerSendMessagePacket;
+import net.lightcode.network.NetworkService;
+import net.lightcode.network.packet.impl.PlayerSendMessagePacket;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

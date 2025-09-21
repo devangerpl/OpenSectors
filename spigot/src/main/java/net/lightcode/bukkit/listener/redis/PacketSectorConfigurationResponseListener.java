@@ -2,8 +2,8 @@ package net.lightcode.bukkit.listener.redis;
 
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.region.BukkitSectorRegion;
-import net.lightcode.packet.impl.SectorConfigurationResponsePacket;
-import net.lightcode.redis.PacketListener;
+import net.lightcode.network.packet.impl.SectorConfigurationResponsePacket;
+import net.lightcode.network.packet.PacketListener;
 import net.lightcode.sector.Sector;
 
 import java.util.List;

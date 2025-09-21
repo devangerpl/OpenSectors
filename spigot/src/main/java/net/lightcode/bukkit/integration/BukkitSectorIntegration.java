@@ -1,11 +1,11 @@
 package net.lightcode.bukkit.integration;
 
-import net.lightcode.NetworkService;
+import net.lightcode.network.NetworkService;
 import net.lightcode.bukkit.BukkitSectorPlugin;
 import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.user.service.UserService;
-import net.lightcode.packet.Packet;
-import net.lightcode.redis.PacketListener;
+import net.lightcode.network.packet.Packet;
+import net.lightcode.network.packet.PacketListener;
 import net.lightcode.sector.Sector;
 import net.lightcode.sector.service.SectorService;
 import org.bukkit.Location;

@@ -1,6 +1,6 @@
 package net.lightcode.bukkit.user.service;
 
-import net.lightcode.NetworkService;
+import net.lightcode.network.NetworkService;
 import net.lightcode.bukkit.user.User;
 import net.lightcode.bukkit.user.repository.UserRepository;
 

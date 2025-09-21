@@ -3,7 +3,7 @@ package net.lightcode.bukkit.user.repository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.lettuce.core.api.sync.RedisCommands;
-import net.lightcode.NetworkService;
+import net.lightcode.network.NetworkService;
 import net.lightcode.bukkit.user.User;
 
 public class UserRepository {

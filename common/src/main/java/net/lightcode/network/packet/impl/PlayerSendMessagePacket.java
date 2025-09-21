@@ -1,6 +1,6 @@
-package net.lightcode.packet.impl;
+package net.lightcode.network.packet.impl;
 
-import net.lightcode.packet.Packet;
+import net.lightcode.network.packet.Packet;
 
 public class PlayerSendMessagePacket extends Packet {
 

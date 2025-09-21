@@ -3,8 +3,8 @@ package net.lightcode.bridge.listener.redis;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.lightcode.bridge.BridgePlugin;
-import net.lightcode.packet.impl.PlayerConnectSectorPacket;
-import net.lightcode.redis.PacketListener;
+import net.lightcode.network.packet.impl.PlayerConnectSectorPacket;
+import net.lightcode.network.packet.PacketListener;
 
 import java.util.Optional;
 

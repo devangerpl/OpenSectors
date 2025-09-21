@@ -40,10 +40,10 @@ public class MessagesConfiguration implements Configuration {
 
         this.spawnSectorNotFoundMessage = "&cNie odnaleziono dostepnego sektora spawna";
 
-        this.connectedInfoTitle = "&a&lOpenSectors 3.0";
+        this.connectedInfoTitle = "&a&lOpenSectors";
         this.connectedInfoSubTitle = "&7Pomyslnie &a&npolaczono&r &7z sektorem &a&n{SECTOR}";
 
-        this.scoreboardTitle = "&a&lOpenSectors 3.0";
+        this.scoreboardTitle = "&a&lOpenSectors";
         this.scoreboardLines = new ArrayList<>();
 
         this.scoreboardLines.add("");
