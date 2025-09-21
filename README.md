@@ -102,7 +102,7 @@ the config files.
   "playerAlreadyConnectedMessage": "&cJesteś aktualnie połączony z tym kanałem",
   "playerSectorTransferCooldownMessage": "&cPoczekaj chwile zanim znowu przejdziesz przez sektor",
   "spawnSectorNotFoundMessage": "&cNie odnaleziono dostepnego sektora spawna",
-  "scoreboardTitle": "&a&lOpenSectors 3.0",
+  "scoreboardTitle": "&a&lOpenSectors",
   "scoreboardLines": [
     "",
     "&7Polaczono z &a{SECTOR}",
@@ -113,7 +113,7 @@ the config files.
     "&7TPS: &a{TPS}",
     ""
   ],
-  "connectedInfoTitle": "&a&lOpenSectors 3.0",
+  "connectedInfoTitle": "&a&lOpenSectors",
   "connectedInfoSubTitle": "&7Pomyslnie &a&npolaczono&r &7z sektorem &a&n{SECTOR}"
 }
 
