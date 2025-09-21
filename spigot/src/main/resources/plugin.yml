@@ -1,9 +1,10 @@
 name: opensectors-spigot
 author: fajzu
-version: '3.6.1'
-main: net.lightcode.bukkit.BukkitSectorPlugin
+version: '3.7'
+main: io.github.fajzu.sectors.bukkit.BukkitSectorPlugin
 
 commands:
   channel:
     aliases:
       - ch
+      -
