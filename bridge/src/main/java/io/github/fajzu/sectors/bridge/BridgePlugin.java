@@ -23,7 +23,7 @@ import java.util.List;
 @Plugin(
         id = "opensectors-bridge",
         name = "opensectors-bridge",
-        version = "3.6.2",
+        version = "3.7",
         authors = "fajzu"
 )
 public class BridgePlugin {
@@ -81,7 +81,7 @@ public class BridgePlugin {
         this.server.getEventManager().register(this, new PlayerServerConnectListener(this));
         this.logger.log("Bridge listeners registered");
 
-        this.checkForUpdates("3.6.2");
+        this.checkForUpdates("3.7");
 
         this.logger.log("Bridge initialization complete!");
     }
