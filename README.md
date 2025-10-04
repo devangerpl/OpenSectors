@@ -131,6 +131,7 @@ Spotted an issue? Report it via Discord: **fizuxd** 💬
 
 - 📡 Add support for NATS
 - 📝 Change configuration system from JSON to YAML
+- 🐛 Fix 1.21.1+ NMS support
 
 ---
 
