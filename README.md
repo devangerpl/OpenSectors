@@ -5,7 +5,8 @@
 ---
 
 > [!WARNING]
-> **This branch is currently under active development**
+> **Project is currently under active development**
+> **on branch** [Click](https://github.com/fajzu1/OpenSectors/tree/4.x)
 >
 > ⚠️ Features may be incomplete or unstable.  
 > ❌ This branch is **unstable** and should not be used on the main/production server.  
